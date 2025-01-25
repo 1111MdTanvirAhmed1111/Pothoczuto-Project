@@ -4,7 +4,7 @@ const router = require('./router')
 const app = express()
 const cors = require('cors')
 const https = require('https')
-
+const { default: mongoose } = require('mongoose')
 
 app.use(cors())
 app.use(express.json({limit:"50mb"}))
