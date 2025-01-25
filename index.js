@@ -19,4 +19,4 @@ mongoose.connect(process.env.DB).then(res=>console.log("connected to db")).catch
 
 
 
-app.listen()
+app.listen(3000)
