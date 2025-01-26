@@ -17,7 +17,7 @@ export default function Home() {
     const [re,setRe] = useState([])
 
     const feData = async ()=>{
-      const res = await fetch(`https://api.pothoczuto.xyz/posts`)
+      const res = await fetch(`${import.meta.env.VITE_bApi}/posts`)
       const re2 = await res.json()
       setRe(re2)
       console.log(re2)
