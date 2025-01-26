@@ -5,12 +5,11 @@ exports.addComment = async (req, res) => {
   try {
     const { blogId } = req.params;
     const { text } = req.body;
-    const comment = new Comment({
+    const comment =  await Comment.create({
       blogId,
       text,
       createdBy: req.user._id,
     });
-    await comment.save();
     res.status(201).json({ message: 'Comment added successfully.', comment });
   } catch (err) {
     res.status(500).json({ message: 'Internal server error.', error: err.message });
