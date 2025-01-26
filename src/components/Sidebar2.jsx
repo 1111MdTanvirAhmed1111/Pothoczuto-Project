@@ -17,7 +17,7 @@ export default function Sidebar2({datas}) {
           {datas.map((post) => (
             <li key={post._id}>
               <NavLink
-                href={`/blog/${post._id}`}
+                to={`/blog/${post._id}`}
                 className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
                 {post.title}
               </NavLink>

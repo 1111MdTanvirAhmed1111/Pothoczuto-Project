@@ -17,9 +17,9 @@ export default  function HeroSection({data}) {
         className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
         <div className="text-center text-white p-4">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">{data.title}</h1>
-          <p className="text-lg md:text-xl mb-6">আমাদের দেশের অসাধারণ প্রাকৃতিক সৌন্দর্য ও সমৃদ্ধ ঐতিহ্যের গল্প</p>
+          <p className="text-lg md:text-xl w-[80%] mx-auto my-6">{data.content.slice(0,200)}</p>
           <NavLink
-            href={`/blog/${data._id}`}
+            to={`/blog/${data._id}`}
             className="bg-white text-gray-800 px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition-colors">
             আরও পড়ুন
           </NavLink>

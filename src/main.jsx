@@ -11,9 +11,17 @@ import Contact from './pages/Contact/Contact.jsx'
 import { ThemeProvider } from './Api/ThemeContext.jsx'
 
 import Blog from './pages/blog/Blog'
-import PostForm from './pages/PostForm.jsx'
+import PostForm from './pages/PostForm'
 import AdminLayout from './Admin/Pages/layout'
-import BlogDetails from './pages/blog/BlogDetails.jsx'
+import BlogDetails from './pages/blog/BlogDetails'
+import DashboardPage from './Admin/Pages/Dashboard/DashboardPage';
+import BlogPostsPage from './Admin/Pages/blog-posts/BlogPosts';
+import AnalyticsPage from './Admin/Pages/analytics/AnalyticsPage'
+import UsersPage from './Admin/Pages/users/UsersPage'
+import CommentsPage from './Admin/Pages/comments/CommentsPage'
+import SettingsPage from './Admin/Pages/settings/SettingsPage'
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -57,12 +65,20 @@ const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       {
+        path: "/admin",
+        element: <DashboardPage />
+      },
+      {
         path: "/admin/analytics",
-        element: <Blog />
+        element: <AnalyticsPage />
+      },
+      {
+        path: "/admin/comments",
+        element: <CommentsPage />
       },
       {
         path: "/admin/blog-posts",
-        element: <Blog />
+        element: <BlogPostsPage />
       },
       {
         path: "/admin/blog-posts/create",
@@ -79,11 +95,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/settings",
-        element: <Blog />
+        element: <SettingsPage />
       },
       {
         path: "/admin/users",
-        element: <Blog />
+        element: <UsersPage />
       },
 
     ]

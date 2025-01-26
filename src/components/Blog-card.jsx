@@ -5,13 +5,15 @@ import { Badge } from "@/components/ui/badge"
 export default function BlogCard({ title, author, excerpt, date, imageUrl, category }) {
   return (
     <Card className="h-full flex flex-col overflow-hidden">
-      <div className="relative w-full h-48">
+
+      
+      <div className="relative w-full h-64 flex overflow-hidden items-center ">
         <img
           src={imageUrl}
           alt={title}
           fill
           style={{ objectFit: 'cover' }}
-          className="transition-all duration-300 hover:scale-110"
+          className="transition-all duration-300 hover:scale-110 "
         />
         <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground">{category}</Badge>
       </div>
