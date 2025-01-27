@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import Navbar from './components/Navbar';
 import { useTheme } from './Api/ThemeContext';
 import { Suspense } from 'react';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   const {theme} = useTheme()
@@ -12,7 +13,7 @@ function App() {
       <Suspense fallback={<div>Loadingg</div>}>
     <Outlet />
     </Suspense>
-    
+    <ScrollToTop />
     </div>
   )
 }

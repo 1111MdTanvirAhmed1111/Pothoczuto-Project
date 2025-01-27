@@ -11,7 +11,7 @@ import Contact from './pages/Contact/Contact.jsx'
 import { ThemeProvider } from './Api/ThemeContext.jsx'
 
 import Blog from './pages/blog/Blog'
-import PostForm from './pages/PostForm'
+import PostForm from './Admin/Pages/blog-posts/create/PostForm.jsx'
 import AdminLayout from './Admin/Pages/layout'
 import BlogDetails from './pages/blog/BlogDetails'
 import DashboardPage from './Admin/Pages/Dashboard/DashboardPage';
@@ -20,7 +20,6 @@ import AnalyticsPage from './Admin/Pages/analytics/AnalyticsPage'
 import UsersPage from './Admin/Pages/users/UsersPage'
 import CommentsPage from './Admin/Pages/comments/CommentsPage'
 import SettingsPage from './Admin/Pages/settings/SettingsPage'
-
 
 const router = createBrowserRouter([
   {
@@ -115,6 +114,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProvider>
+     
    <RouterProvider router={router} /> 
    </ThemeProvider>
   </StrictMode>,
