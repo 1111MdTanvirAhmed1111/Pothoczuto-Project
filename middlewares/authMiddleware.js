@@ -7,14 +7,18 @@ const authMiddleware = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id);
+    const user = await User.findById(decoded._id);
     if (!user){
       return res.status(404).json({ message: 'User not found.' });
     } else{
 
-      
+      if(decoded.password == user.password){
+        next();
+      }else{
+        return res.status(404).json({ message: 'Password not Match' });
+      }
       req.user = user;
-      next();
+     
     }
 
    

@@ -1,7 +1,7 @@
 const Comment = require('../models/Comment');
 
 // Add a comment to a blog post
-exports.addComment = async (req, res) => {
+const addComment = async (req, res) => {
   try {
     const { blogId } = req.params;
     const { text } = req.body;
@@ -17,7 +17,7 @@ exports.addComment = async (req, res) => {
 };
 
 // Reply to a comment
-exports.replyToComment = async (req, res) => {
+const replyToComment = async (req, res) => {
   try {
     const { commentId } = req.params;
     const { text } = req.body;
@@ -33,7 +33,7 @@ exports.replyToComment = async (req, res) => {
 };
 
 // Approve a comment
-exports.approveComment = async (req, res) => {
+const approveComment = async (req, res) => {
   try {
     const { id } = req.params;
     const comment = await Comment.findByIdAndUpdate(
@@ -49,7 +49,7 @@ exports.approveComment = async (req, res) => {
 };
 
 // Delete a comment
-exports.deleteComment = async (req, res) => {
+const deleteComment = async (req, res) => {
   try {
     const { id } = req.params;
     const comment = await Comment.findByIdAndDelete(id);
@@ -58,4 +58,13 @@ exports.deleteComment = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Internal server error.', error: err.message });
   }
+};
+
+
+
+module.exports = { 
+  addComment, 
+  replyToComment, 
+  approveComment, 
+  deleteComment 
 };

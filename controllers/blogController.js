@@ -5,27 +5,37 @@ const Post = require('../models/Post') // Path to your Post model
 // Get all posts or a specific post
 async function GetPosts(req, res) {
   const { id } = req.query;
+const {limit} = req.query
 
-  if (id) {
+
+
     try {
-      const post = await Post.findById(id);
+      id 
+      
+      ?
+      
+      await Post.findById(id) ?   res.status(200).json(await Post.findById(id)) 
+      
+      
+      : res.status(404).json({ "title": "Post Not Found" })
+      
 
-      if (!post) {
-        return res.status(404).json({ "title": "Post Not Found" });
-      }
 
-      res.status(200).json(post);
+
+      
+      
+      :  await Post.find().limit(limit ? limit : 0 ) 
+
+
+
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
-  } else {
-    try {
-      const posts = await Post.find();
-      res.status(200).json(posts);
-    } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  }
+
+
+
+
+
 }
 
 // Create a new post
