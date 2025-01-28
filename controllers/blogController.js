@@ -26,7 +26,7 @@ const {limit} = req.query
 
       
       
-      :  await Post.find({}).limit(limit ? limit : 0 ) && res.status(200).json(await Post.find({})) 
+      :  res.status(200).json(await Post.find({}).limit(limit ? limit : 0 )) 
 
 
 
