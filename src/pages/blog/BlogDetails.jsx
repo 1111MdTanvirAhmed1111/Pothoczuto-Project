@@ -44,13 +44,13 @@ useEffect(()=>{
         <span className="flex items-center gap-1"><User size={16} /> {post.author}</span>
         <span className="flex items-center gap-1"><Calendar size={16} /> {post.date}</span>
       </div>
-      <div className="relative w-full h-72 mb-8">
+      <div className="relative w-full flex justify-center items-center  overflow-hidden h-96 mb-8">
       <img
           src={post.imageUrl}
           alt={post.title}
           fill
           style={{ objectFit: 'cover' }}
-          className="rounded-lg w-full h-full"
+          className="rounded-lg "
         />
       </div>
       {/* <PostLiker /> */}
