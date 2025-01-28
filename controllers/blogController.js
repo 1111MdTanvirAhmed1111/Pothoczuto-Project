@@ -9,12 +9,14 @@ const {limit} = req.query
 
 
 
+
+
     try {
       id 
       
       ?
       
-      await Post.findById(id) ?   res.status(200).json(await Post.findById(id)) 
+    await Post.findById(id) ?   res.status(200).json(await Post.findById(id)) 
       
       
       : res.status(404).json({ "title": "Post Not Found" })
@@ -24,7 +26,7 @@ const {limit} = req.query
 
       
       
-      :  await Post.find().limit(limit ? limit : 0 ) 
+      :  await Post.find({}).limit(limit ? limit : 0 ) && res.status(200).json(await Post.find({})) 
 
 
 
