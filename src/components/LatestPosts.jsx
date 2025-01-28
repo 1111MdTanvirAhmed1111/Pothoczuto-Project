@@ -1,30 +1,7 @@
 
 import {NavLink} from 'react-router-dom'
 
-const latestPosts = [
-  {
-    id: 1,
-    title: 'সুন্দরবনের জীববৈচিত্র্য: একটি অনন্য পরিবেশ ব্যবস্থা',
-    excerpt: 'সুন্দরবনের অসাধারণ জীববৈচিত্র্য এবং এর সংরক্ষণের গুরুত্ব সম্পর্কে জানুন...',
-    image: '/sundarbans.jpg',
-    category: 'প্রকৃতি',
-  },
-  {
-    id: 2,
-    title: 'বাংলাদেশের ঐতিহ্যবাহী খাবার: স্বাদ ও ঐতিহ্যের মিলন',
-    excerpt: 'বাংলাদেশের বিভিন্ন অঞ্চলের ঐতিহ্যবাহী খাবার এবং তাদের ইতিহাস সম্পর্কে জানুন...',
-    image: '/bengali-food.jpg',
-    category: 'খাদ্য ও সংস্কৃতি',
-  },
-  {
-    id: 3,
-    title: 'ঢাকার ঐতিহাসিক স্থাপত্য: অতীতের সাক্ষী',
-    excerpt: 'ঢাকার প্রাচীন ও ঐতিহাসিক স্থাপত্যের এক ঝলক, যা বাংলার ইতিহাস ও সংস্কৃতির প্রতিফলন...',
-    image: '/dhaka-architecture.jpg',
-    category: 'ইতিহাস',
-  },
-  // Add more posts as needed
-]
+
 
 export default function LatestPosts({datas}) {
   return (
@@ -46,7 +23,7 @@ export default function LatestPosts({datas}) {
               <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">{post.title}</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">{post.content.slice(0, 100)}</p>
               <NavLink
-                to={`/blog/${post.id}`}
+                to={`/blog/${post._id}`}
                 className="text-blue-600 dark:text-blue-400 hover:underline">
                 আরও পড়ুন
               </NavLink>
