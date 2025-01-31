@@ -55,7 +55,7 @@ useEffect(()=>{
       </div>
       {/* <PostLiker /> */}
       <div className="prose max-w-none mb-12">
-        <p className='whitespace-pre-wrap'>{post.content}</p>
+        <p className='whitespace-pre-wrap' dangerouslySetInnerHTML={{__html: post.content}}></p>
       </div>
       <WriterInfo author={post.author} date={post.date} />
       <SharePost slug={id} />
