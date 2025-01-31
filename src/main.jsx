@@ -20,6 +20,7 @@ import AnalyticsPage from './Admin/Pages/analytics/AnalyticsPage'
 import UsersPage from './Admin/Pages/users/UsersPage'
 import CommentsPage from './Admin/Pages/comments/CommentsPage'
 import SettingsPage from './Admin/Pages/settings/SettingsPage'
+import AuthTabs from './pages/Auth/auth-tabs.jsx'
 
 const router = createBrowserRouter([
   {
@@ -49,7 +50,10 @@ const router = createBrowserRouter([
     }, 
    
 
- 
+    {
+      path: "/auth",
+      element: <AuthTabs />,
+    }
 
 
 
@@ -103,6 +107,7 @@ const router = createBrowserRouter([
 
     ]
   }, 
+
 
 
 ])
