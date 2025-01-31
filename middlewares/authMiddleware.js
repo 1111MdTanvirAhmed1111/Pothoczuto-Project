@@ -12,7 +12,9 @@ const authMiddleware = async (req, res, next) => {
       return res.status(404).json({ message: 'User not found.' });
     } else{
 
-      if(decoded.password == user.password){
+    const isMatch = await bcrypt.compare(decoded.password,user.password);
+
+      if(isMatch){
         next();
       }else{
         return res.status(404).json({ message: 'Password not Match' });
