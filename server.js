@@ -9,7 +9,7 @@ const app = express();
 const https = require('https')
 
 app.use(express.json());
-
+ 
 app.use(cors())
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', blogRoutes);

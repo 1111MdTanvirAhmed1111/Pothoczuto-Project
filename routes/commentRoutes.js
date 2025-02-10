@@ -14,7 +14,7 @@ const router = express.Router();
 
 
 
-
+ 
   //Normals Zone
 // Get all comments for a blog post
 router.get('/:blogId', getAllComments);
