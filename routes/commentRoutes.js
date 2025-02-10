@@ -9,10 +9,15 @@ const {
 const authMiddleware = require('../middlewares/authMiddleware');
 const roleMiddleware = require('../middlewares/roleMiddleware');
 const usersCommentAuthenticate = require('../middlewares/usersCommentAuth');
-
+const { getAllComments } = require('../controllers/commentController');
 const router = express.Router();
 
+
+
+
   //Normals Zone
+// Get all comments for a blog post
+router.get('/:blogId', getAllComments);
 
 // Add a comment to a blog post
 router.post('/:blogId', authMiddleware, addComment);
