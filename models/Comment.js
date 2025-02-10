@@ -7,12 +7,15 @@ const commentSchema = new mongoose.Schema({
   approved: { type: Boolean, default: false },
   replies: [
     {
+      id: { type: mongoose.Schema.Types.ObjectId, required: true },
       text: String,
       createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       createdAt: { type: Date, default: Date.now },
+      likes: []
     },
   ],
   createdAt: { type: Date, default: Date.now },
+  likes: {type: Array, default: []}
 });
 
 module.exports = mongoose.model('Comment', commentSchema);
