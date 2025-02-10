@@ -4,11 +4,15 @@ const {
   replyToComment,
   approveComment,
   deleteComment,
+  editComment,
 } = require('../controllers/commentController');
 const authMiddleware = require('../middlewares/authMiddleware');
 const roleMiddleware = require('../middlewares/roleMiddleware');
+const usersCommentAuthenticate = require('../middlewares/usersCommentAuth');
 
 const router = express.Router();
+
+  //Normals Zone
 
 // Add a comment to a blog post
 router.post('/:blogId', authMiddleware, addComment);
@@ -16,10 +20,25 @@ router.post('/:blogId', authMiddleware, addComment);
 // Reply to a comment
 router.post('/reply/:commentId', authMiddleware, replyToComment);
 
-// Approve a comment (admin only)
-router.put('/:id/approve', authMiddleware, roleMiddleware('admin'), approveComment);
 
-// Delete a comment (admin only)
+// Edit Comment For User
+router.put('/:id',usersCommentAuthenticate, editComment)
+
+// Delete Comment for a User
+router.delete('/:id',usersCommentAuthenticate, deleteComment)
+
+
+
+
+// Admins Zone
+
+
+// Approve a comment 
+router.put('/:id/approve', authMiddleware, roleMiddleware('admin'), approveComment);
+// Delete a comment
 router.delete('/:id', authMiddleware, roleMiddleware('admin'), deleteComment);
+
+
+
 
 module.exports = router;

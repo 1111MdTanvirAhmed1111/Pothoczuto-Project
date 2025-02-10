@@ -14,12 +14,15 @@ const authMiddleware = async (req, res, next) => {
 
     const isMatch = await bcrypt.compare(decoded.password,user.password);
 
+
+    req.user = user;
+    
       if(isMatch){
         next();
       }else{
         return res.status(404).json({ message: 'Password not Match' });
       }
-      req.user = user;
+     
      
     }
 

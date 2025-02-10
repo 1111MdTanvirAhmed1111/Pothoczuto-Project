@@ -32,6 +32,30 @@ const replyToComment = async (req, res) => {
   }
 };
 
+
+// Edit a comment
+const editComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { text } = req.body;
+    const comment = await Comment.findById(id);
+    if (!comment) return res.status(404).json({ message: 'Comment not found.' });
+
+    if (comment.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Unauthorized to edit this comment.' });
+    }
+
+    comment.text = text;
+    await comment.save();
+    res.status(200).json({ message: 'Comment edited successfully.', comment });
+  } catch (err) {
+    res.status(500).json({ message: 'Internal server error.', error: err.message });
+  }
+};
+
+
+
+
 // Approve a comment
 const approveComment = async (req, res) => {
   try {
@@ -60,6 +84,14 @@ const deleteComment = async (req, res) => {
   }
 };
 
+
+module.exports = { 
+  addComment, 
+  replyToComment, 
+  approveComment, 
+  deleteComment,
+  editComment
+};
 
 
 module.exports = { 

@@ -3,13 +3,25 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const roleMiddleware = require('../middlewares/roleMiddleware');
 const { createPost, GetPosts, deletePost, updatePost } = require('../controllers/blogController');
 const { uploadSingle } = require('../middlewares/multer');
+const usersPostAuthenticate = require('../middlewares/usersPostAuthenticate');
 
 const router = express.Router();
 
+// Full Non Restricted ROutes
 
-router.post('/' , authMiddleware, roleMiddleware('admin'), uploadSingle('PostImg'),createPost)
 router.get('/',GetPosts)
-router.delete('/:id' , deletePost)
-router.put('/:id' , updatePost)
+
+
+// Intermediate Routes
+router.post('/' , authMiddleware, roleMiddleware('writer'), usersPostAuthenticate, uploadSingle('PostImg'),createPost)
+router.delete('/:id' ,authMiddleware ,roleMiddleware('writer'), usersPostAuthenticate, deletePost)
+router.put('/:id'  ,authMiddleware,roleMiddleware('writer'), usersPostAuthenticate, uploadSingle('PostImg'), updatePost)
+
+
+//Admin MasterClass Routes
+
+router.delete('/:id' ,authMiddleware ,roleMiddleware('admin'), deletePost)
+router.put('/:id'  ,authMiddleware,roleMiddleware('admin'), usersPostAuthenticate, uploadSingle('PostImg'), updatePost)
+
 
 module.exports = router;
