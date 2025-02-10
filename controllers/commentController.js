@@ -1,12 +1,10 @@
 const Comment = require('../models/Comment');
- 
+
 // Get all comments for a blog post
 const getAllComments = async (req, res) => {
   try {
     const { blogId } = req.params;
     const comments = await Comment.find({ blogId });
-    console.log(comments)
-    console.log(blogId)
     res.status(200).json(comments);
   } catch (err) {
     res.status(500).json({ message: 'Internal server error.', error: err.message });
