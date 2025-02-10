@@ -6,6 +6,7 @@ const getAllComments = async (req, res) => {
     const { blogId } = req.params;
     const comments = await Comment.find({ blogId });
     console.log(comments)
+    console.log(blogId)
     res.status(200).json(comments);
   } catch (err) {
     res.status(500).json({ message: 'Internal server error.', error: err.message });
