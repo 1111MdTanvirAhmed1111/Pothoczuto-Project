@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 
 // Assuming you have a Post model like this:
 const Post = require('../models/Post') // Path to your Post model
@@ -9,7 +11,7 @@ const {limit} = req.query
 
 
 
-
+ 
 
     try {
       id 
@@ -42,23 +44,27 @@ const {limit} = req.query
 
 // Create a new post
 const createPost = async (req, res) => {
-  if (!req.body.Pdata) {
-    return res.status(400).json({ "error": "Please Provide Details" });
-  }
-
-  const { title, content, author, category } = JSON.parse(req.body.Pdata);
-
   try {
-    // Use the `create()` method to insert a new document in a single step
+    if (!req.body.Pdata) {
+      return res.status(400).json({ "error": "Please Provide Details" });
+    }
+
+    const { title, content, author, category } = JSON.parse(req.body.Pdata);
+    const imageUrl = req.file ? `./uploads/blogs/images/${req.file.filename}` : "null";
+
     const post = await Post.create({
       title,
       content,
       author,
-      category
+      category,
+      imageUrl
     });
 
     res.status(200).json(post);
   } catch (error) {
+    if (req.file) {
+      fs.unlinkSync(req.file.path);
+    }
     res.status(500).json({ error: 'Failed to create post', message: error.message });
   }
 };
@@ -72,21 +78,47 @@ async function updatePost(req, res) {
     return res.status(404).json({ "error": "Please Provide Details" });
   }
 
-  const { title, content, author, category } = JSON.parse(req.body.Pdata);
-
   try {
-    const updatedPost = await Post.findByIdAndUpdate(
-      id,
-      { title, content, author, category },
-      { new: true }
-    );
-
-    if (!updatedPost) {
+    const post = await Post.findById(id);
+    if (!post) {
       return res.status(404).json({ "error": "Post not found" });
     }
 
+    const { title, content, author, category } = JSON.parse(req.body.Pdata);
+
+    // Handle image update
+    let imageUrl = post.imageUrl; // Keep old image by default
+    if (req.file) {
+      // Delete old image if exists
+      if (post.imageUrl && post.imageUrl !== "null") {
+        const oldImagePath = path.join(__dirname, '..', post.imageUrl);
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath);
+        }
+      }
+      imageUrl = `./uploads/blogs/images/${req.file.filename}`;
+    }
+
+    
+
+    // Using findByIdAndUpdate() instead of save()
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      {
+        title,
+        content,
+        author,
+        category,
+        imageUrl
+      },
+      { new: true } // Returns the updated document
+    );
+
     res.status(200).json(updatedPost);
   } catch (error) {
+    if (req.file) {
+      fs.unlinkSync(req.file.path);
+    }
     res.status(500).json({ error: 'Failed to update post' });
   }
 }
@@ -96,18 +128,32 @@ async function deletePost(req, res) {
   const { id } = req.params;
 
   try {
-    const post = await Post.findByIdAndDelete(id);
+    const post = await Post.findById(id);
 
     if (!post) {
       return res.status(404).json({ "error": "Post not found" });
     }
 
+    // Delete the image file if exists
+    if (post.imageUrl && post.imageUrl !== "null") {
+      const imagePath = path.join(__dirname, '..', post.imageUrl.replace('.', ''));
+      console.log('Attempting to delete image at:', imagePath);
+      
+      try {
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+          console.log('Image deleted successfully');
+        }
+      } catch (error) {
+        console.error('Error deleting image:', error);
+      }
+    }
 
-    // Delete the image file
-
-
-    res.status(200).json(post);
+    // Delete the post from database
+    await Post.findByIdAndDelete(id);
+    res.status(200).json({ message: "Post deleted successfully", post });
   } catch (error) {
+    console.error('Delete post error:', error);
     res.status(500).json({ error: 'Failed to delete post' });
   }
 }
