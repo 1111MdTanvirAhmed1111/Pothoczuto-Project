@@ -9,7 +9,6 @@ const commentSchema = new mongoose.Schema({
     {
       id: { type: mongoose.Schema.Types.ObjectId, required: true },
       text: String,
-      createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       createdAt: { type: Date, default: Date.now },
       likes: []
     },
