@@ -20,10 +20,15 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "*", // প্রোডাকশনে এখানে শুধু আপনার ফ্রন্টএন্ড ডোমেইন দিন
-    methods: ["GET", "POST"]
-  }
+    origin: ["http://localhost:3000"], // Your Next.js app URL
+    methods: ["GET", "POST"],
+    credentials: true,
+    transports: ['websocket', 'polling'] // Add explicit transports
+  },
+  allowEIO3: true // Enable compatibility with Socket.IO v3 clients
 });
+
+
 
 app.use(express.json());
  
@@ -56,6 +61,10 @@ io.on('connection', (socket) => {
     socket.leave(`post_${postId}`);
     console.log(`User ${socket.id} left post ${postId}`);
   });
+  
+  socket.on("message", (message) => {
+    console.log(message);
+  })
 
   socket.on('disconnect', () => {
     console.log('User disconnected', socket.id);
