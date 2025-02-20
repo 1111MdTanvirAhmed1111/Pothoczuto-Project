@@ -7,6 +7,23 @@ const commentRoutes = require('./routes/commentRoutes')
 const cors = require('cors')
 
 
+const os = require('os');
+const getLocalIpAddress = () => {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      // Skip internal and non-IPv4 addresses
+      if (!iface.internal && iface.family === 'IPv4') {
+        return iface.address;
+      }
+    }
+  }
+  return 'localhost';
+};
+const ipAddress = getLocalIpAddress();
+
+
+
 //socket io
 const { createServer } = require('http');
 const { Server } = require('socket.io');
@@ -78,9 +95,9 @@ app.set('io', io);
 mongoose
   .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log('Connected to MongoDB', ipAddress);
     // Use httpServer instead of app.listen
-    httpServer.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    httpServer.listen(PORT, () => console.log(`Server running on port ${ipAddress}:${PORT}`));
   })
   .catch((err) => console.log(err.message));
 
