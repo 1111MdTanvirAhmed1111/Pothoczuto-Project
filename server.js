@@ -5,7 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const blogRoutes = require('./routes/blogRoutes');
 const commentRoutes = require('./routes/commentRoutes')
 const cors = require('cors')
-
+const https = require('https')
 
 const os = require('os');
 const getLocalIpAddress = () => {
@@ -44,6 +44,11 @@ const io = new Server(httpServer, {
   },
   allowEIO3: true // Enable compatibility with Socket.IO v3 clients
 });
+
+
+setInterval(() => {
+  https.get("https://pothoczuto-project-5kvp.onrender.com/"); 
+  }, 2* 60 * 1000);
 
 
 
