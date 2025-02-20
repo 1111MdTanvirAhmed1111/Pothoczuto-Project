@@ -60,6 +60,10 @@ const createPost = async (req, res) => {
       imageUrl
     });
 
+    // Emit new post event to all connected clients
+    const io = req.app.get('io');
+    io.emit('new_post', post);
+
     res.status(200).json(post);
   } catch (error) {
     if (req.file) {
@@ -114,6 +118,10 @@ async function updatePost(req, res) {
       { new: true } // Returns the updated document
     );
 
+    // Emit update event to clients in this post's room
+    const io = req.app.get('io');
+    io.to(`post_${id}`).emit('post_updated', updatedPost);
+
     res.status(200).json(updatedPost);
   } catch (error) {
     if (req.file) {
@@ -151,6 +159,11 @@ async function deletePost(req, res) {
 
     // Delete the post from database
     await Post.findByIdAndDelete(id);
+
+    // Emit delete event to all clients
+    const io = req.app.get('io');
+    io.emit('post_deleted', id);
+
     res.status(200).json({ message: "Post deleted successfully", post });
   } catch (error) {
     console.error('Delete post error:', error);
