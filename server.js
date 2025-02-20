@@ -48,7 +48,7 @@ const io = new Server(httpServer, {
 
 setInterval(() => {
   https.get("https://pothoczuto-project-5kvp.onrender.com/"); 
-  }, 2* 60 * 1000);
+  }, 50 * 1000);
 
 
 
