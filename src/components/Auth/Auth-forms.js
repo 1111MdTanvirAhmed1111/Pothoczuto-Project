@@ -20,7 +20,7 @@ export default function AuthForms() {
     const password = formData.get("password")
 
     try {
-      const response = await fetch(`https://api.pothoczuto.xyz/api/auth/register`, {
+      const response = await fetch(`${process.env.API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
@@ -49,7 +49,8 @@ export default function AuthForms() {
     const password = formData.get("password")
 
     try {
-      const response = await fetch(`https://api.pothoczuto.xyz/api/auth/login`, {
+      console.log(process.env.API_URL, "ap[i")
+      const response = await fetch(`${process.env.API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

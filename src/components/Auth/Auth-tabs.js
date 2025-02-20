@@ -12,8 +12,13 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 import { loginSchema, registerSchema } from "./schemas"
 import { useToast } from '@/hooks/use-toast';
+import { useRouter } from "next/navigation"
+
 
 const AuthTabs = () => {
+
+  const router = useRouter()
+
   const [isLoading, setIsLoading] = useState(false)
   const [serverError, setServerError] = useState("")
   const { toast } = useToast()
@@ -39,19 +44,22 @@ const AuthTabs = () => {
     setServerError("")
 console.log(data)
     try {
-      const response = await fetch(`https://api.pothoczuto.xyz/api/auth/login`, {
+      const response = await fetch("https://pothoczuto-project-5kvp.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
-      console.log(response)
+ 
       const dataa = await response.json()
-
+      console.log(dataa)
       if (response.ok) {
         toast({
           title: "লগইন সফল",
           description: "আপনি সফলভাবে লগইন করেছেন।",
         })
+        router.refresh()
+        router.push("/")
+
         localStorage.setItem("jwt",JSON.stringify(dataa.token))
         // Handle successful login (e.g., store token, redirect)
       } else {
@@ -73,7 +81,7 @@ console.log(data)
     console.log(data)
     delete data.confirmPassword
     try {
-      const response = await fetch(`https://api.pothoczuto.xyz/api/auth/register`, {
+      const response = await fetch(`${process.env.API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
