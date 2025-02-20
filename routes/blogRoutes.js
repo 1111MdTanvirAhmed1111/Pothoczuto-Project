@@ -13,7 +13,7 @@ router.get('/',GetPosts)
 
 
 // Intermediate Routes
-router.post('/' , authMiddleware, roleMiddleware('writer'), usersPostAuthenticate, uploadSingle('PostImg'),createPost)
+router.post('/' , authMiddleware, roleMiddleware('writer'), uploadSingle('PostImg'),createPost)
 router.delete('/:id' ,authMiddleware ,roleMiddleware('writer'), usersPostAuthenticate, deletePost)
 router.put('/:id'  ,authMiddleware,roleMiddleware('writer'), usersPostAuthenticate, uploadSingle('PostImg'), updatePost)
 

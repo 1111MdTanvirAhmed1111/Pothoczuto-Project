@@ -1,16 +1,10 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Post = require('../models/Post'); // Import the Post model
-
+ 
 const usersPostAuthenticate = async (req, res, next) => {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '');
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
-
-        if (!user) {
-            throw new Error();
-        }
+   
 
         const postId = req.params.postId; // Assuming the post ID is in the request parameters
         const post = await Post.findById(postId);

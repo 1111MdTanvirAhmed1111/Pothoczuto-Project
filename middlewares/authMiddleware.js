@@ -1,13 +1,15 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 const authMiddleware = async (req, res, next) => {
-  const token = req.header('Authorization')?.split(' ')[1];
+  const token = req.headers.authorization
   if (!token) return res.status(401).json({ message: 'Access denied. No token provided.' });
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded._id);
+    console.log(decoded)
+    const user = await User.findById(decoded.id);
     if (!user){
       return res.status(404).json({ message: 'User not found.' });
     } else{
@@ -28,6 +30,7 @@ const authMiddleware = async (req, res, next) => {
 
    
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: 'Invalid token.' });
   }
 };
