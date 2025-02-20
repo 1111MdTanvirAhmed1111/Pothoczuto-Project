@@ -9,24 +9,31 @@ import { useToast } from "@/hooks/use-toast"
 import { Mail, Phone, MapPin } from 'lucide-react'
 import { GradientBackground } from '@/components/Gradiant-background'
 
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
+// Define Zod validation schema
+const schema = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  message: z.string().min(1, { message: "Message is required" }),
+})
 
 export default function Contact() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
   const { toast } = useToast()
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Here you would typically send the form data to your backend
-    console.log({ name, email, message })
+  // Set up React Hook Form with Zod validation
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(schema),
+  })
+
+  const onSubmit = (data) => {
+    console.log(data)
     toast({
       title: "Message Sent!",
       description: "Thanks for reaching out. I'll get back to you soon.",
     })
-    setName('')
-    setEmail('')
-    setMessage('')
   }
 
   return (
@@ -60,32 +67,38 @@ export default function Contact() {
               <CardTitle>Send a Message</CardTitle>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
                   <Input
                     placeholder="Your Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
+                    {...register('name')}
+                    className={`${
+                      errors.name ? 'border-red-500' : ''
+                    }`}
                   />
+                  {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
                 </div>
                 <div>
                   <Input
                     type="email"
                     placeholder="Your Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
+                    {...register('email')}
+                    className={`${
+                      errors.email ? 'border-red-500' : ''
+                    }`}
                   />
+                  {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                 </div>
                 <div>
                   <Textarea
                     placeholder="Your Message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    required
+                    {...register('message')}
                     rows={4}
+                    className={`${
+                      errors.message ? 'border-red-500' : ''
+                    }`}
                   />
+                  {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
                 </div>
                 <Button type="submit" className="w-full">Send Message</Button>
               </form>
@@ -109,4 +122,3 @@ export default function Contact() {
     </GradientBackground>
   )
 }
-

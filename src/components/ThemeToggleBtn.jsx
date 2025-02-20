@@ -15,7 +15,6 @@ import { useTheme } from './../Api/ThemeContext';
 
 export function ThemeToggleBtn() {
   const { theme, setTheme} = useTheme()
-console.log(useTheme())
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

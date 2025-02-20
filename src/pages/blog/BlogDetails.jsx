@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { CommentSection } from './../../components/comment/CommentSection';
 
 export default function BlogPost() {
 
@@ -17,10 +17,10 @@ export default function BlogPost() {
 const [post,setPost] = useState([])
 
     const feData = async ()=>{
-      const res = await axios.get(`${import.meta.env.VITE_bApi}/posts?id=${id}`)
- 
+      const res = await axios.get(`${import.meta.env.VITE_bApi}/posts/${id}`)
+
       setPost(res.data)
-      console.log(res.data)
+      
     }
 
 useEffect(()=>{
@@ -63,8 +63,8 @@ useEffect(()=>{
 
 
 
-
-      {/* <CommentArea id={iparams.slug}/> */}
+<CommentSection id={id} />
+      {/* <CommentArea /> */}
 
     </article>
   )

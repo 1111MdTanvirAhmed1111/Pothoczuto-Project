@@ -96,6 +96,7 @@ const AuthTabs = () => {
   }
 
   return (
+    <div className="h-full w-full flex justify-center items-center mt-7">
     <Tabs defaultValue="login" className="w-[400px]">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="login">লগইন</TabsTrigger>
@@ -208,7 +209,7 @@ const AuthTabs = () => {
         </Alert>
       )}
     </Tabs>
-  )
+    </div>)
 }
 
 export default AuthTabs
