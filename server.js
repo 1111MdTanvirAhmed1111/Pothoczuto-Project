@@ -37,7 +37,7 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:3000"], // Your Next.js app URL
+    origin: ["pothoczuto.xyz"], // Your Next.js app URL
     methods: ["GET", "POST"],
     credentials: true,
     transports: ['websocket', 'polling'] // Add explicit transports
@@ -61,7 +61,7 @@ app.use('/api/comments', commentRoutes);
 // Serve static files from uploads directory
 app.use('/uploads', express.static('uploads'));
 
-const PORT =  4000;
+const PORT = process.env.PORT || 5000;
 
 // Socket.IO events
 io.on('connection', (socket) => {
