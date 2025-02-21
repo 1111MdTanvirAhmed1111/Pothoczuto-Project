@@ -155,7 +155,7 @@ export function Navbar() {
                         setHasToken(false)
                       }}
                     >
-                      লগ আউট
+                      লগ আউট 
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
