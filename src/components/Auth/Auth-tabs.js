@@ -53,6 +53,9 @@ const AuthTabs = () => {
     })
 
     try {
+      console.log('Login Request Data:', data)
+      console.log('API URL:', `${process.env.NEXT_PUBLIC_API_URL}/auth/login`)
+      
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -60,6 +63,8 @@ const AuthTabs = () => {
       })
  
       const serverResponse = await response.json()
+      console.log('Server Response:', serverResponse)
+      console.log('Response Status:', response.status)
       
       // Dismiss loading toast
       loadingToast.dismiss()
@@ -112,7 +117,7 @@ const AuthTabs = () => {
 
     try {
       delete data.confirmPassword
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}auth/register`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

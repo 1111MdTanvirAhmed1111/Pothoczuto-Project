@@ -3,7 +3,7 @@ export async function getUserData(token) {
         method: "GET",
         headers: { "Content-Type": "application/json", "Authorization": token },
     })
-console.log(await response.json())
-    return await response.json()
+const data = await response.json()
+    return data
 }
 

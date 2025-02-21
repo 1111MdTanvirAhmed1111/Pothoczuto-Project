@@ -12,7 +12,7 @@ async function fetchUserData(token) {
                 'Authorization': token
             }
         });
-
+        console.log('Response:', response);
         if (!response.ok) {
             throw new Error('Failed to fetch user data');
         }
