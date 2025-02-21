@@ -5,6 +5,8 @@ import Link from "next/link"
 import { ModeToggle } from "./theme-toggler"
 import { Search, LogIn, Menu, X } from "lucide-react"
 import { Noto_Sans_Bengali } from "next/font/google"
+import { useUser } from "@/contexts/User"
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,14 +34,26 @@ const navigationLinks = [
 ]
 
 export function Navbar() {
+  const {user} = useUser()
   const [hasToken, setHasToken] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
+
+
   useEffect(() => {
-    const token = localStorage.getItem("jwt")
-    setHasToken(!!token)
+    if (user) {
+      setHasToken(true)
+    } else {
+      setHasToken(false)
+    }
+  }, [user])
+
+  useEffect(() => {
+    setHasToken(!!user)
+
+
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
@@ -162,7 +176,7 @@ export function Navbar() {
                 </DropdownMenu>
               ) : (
                 <Link 
-                  href="/auth/login" 
+                  href="/auth" 
                   className="p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors duration-300"
                 >
                   <LogIn className="w-5 h-5" />

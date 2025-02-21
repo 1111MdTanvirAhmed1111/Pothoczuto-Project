@@ -9,16 +9,18 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-
+import { getUserData } from "./actions"
 import { loginSchema, registerSchema } from "./schemas"
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from "next/navigation"
+import { useUser } from "@/contexts/User"
 
 
 const AuthTabs = () => {
 
   const router = useRouter()
-
+  const { setUser } = useUser()
+  console.log(process.env.NEXT_PUBLIC_API_URL, "api url")
   const [isLoading, setIsLoading] = useState(false)
   const [serverError, setServerError] = useState("")
   const { toast } = useToast()
@@ -42,7 +44,14 @@ const AuthTabs = () => {
   const onLogin = async (data) => {
     setIsLoading(true)
     setServerError("")
-console.log(data)
+    
+    // Show loading toast
+    const loadingToast = toast({
+      title: "লগইন হচ্ছে...",
+      description: "অনুগ্রহ করে অপেক্ষা করুন",
+      duration: Infinity, // Keep it visible until we dismiss it
+    })
+
     try {
       const response = await fetch("https://pothoczuto-project-5kvp.onrender.com/api/auth/login", {
         method: "POST",
@@ -50,56 +59,99 @@ console.log(data)
         body: JSON.stringify(data),
       })
  
-      const dataa = await response.json()
-      console.log(dataa)
+      const ServerResponse = await response.json()
+      
+
+
       if (response.ok) {
         toast({
           title: "লগইন সফল",
           description: "আপনি সফলভাবে লগইন করেছেন।",
+          variant: "success",
         })
         router.refresh()
         router.push("/")
 
-        localStorage.setItem("jwt",JSON.stringify(dataa.token))
-        // Handle successful login (e.g., store token, redirect)
+        localStorage.setItem("token", ServerResponse.token)
+
+        setUser(await getUserData(ServerResponse.token))
+
+              // Dismiss loading toast
+      loadingToast.dismiss()
+        
       } else {
         const errorData = await response.json()
         setServerError(errorData.message || "লগইন ব্যর্থ হয়েছে")
+        toast({
+          title: "লগইন ব্যর্থ",
+          description: errorData.message || "লগইন ব্যর্থ হয়েছে",
+          variant: "destructive",
+        })
       }
     } catch (error) {
+      // Dismiss loading toast
+      loadingToast.dismiss()
+      
       console.error("Error during login:", error)
       setServerError("একটি অপ্রত্যাশিত ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।")
+      toast({
+        title: "ত্রুটি",
+        description: "একটি অপ্রত্যাশিত ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।",
+        variant: "destructive",
+      })
     } finally {
       setIsLoading(false)
-
     }
   }
 
   const onRegister = async (data) => {
     setIsLoading(true)
     setServerError("")
-    console.log(data)
-    delete data.confirmPassword
+    
+    // Show loading toast
+    const loadingToast = toast({
+      title: "নিবন্ধন হচ্ছে...",
+      description: "অনুগ্রহ করে অপেক্ষা করুন",
+      duration: Infinity,
+    })
+
     try {
+      delete data.confirmPassword
       const response = await fetch(`${process.env.API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
 
+      // Dismiss loading toast
+      loadingToast.dismiss()
+
       if (response.ok) {
         toast({
           title: "নিবন্ধন সফল",
           description: "আপনি সফলভাবে নিবন্ধন করেছেন।",
+          variant: "success",
         })
-        // Handle successful registration (e.g., show success message, redirect)
       } else {
         const errorData = await response.json()
         setServerError(errorData.message || "নিবন্ধন ব্যর্থ হয়েছে")
+        toast({
+          title: "নিবন্ধন ব্যর্থ",
+          description: errorData.message || "নিবন্ধন ব্যর্থ হয়েছে",
+          variant: "destructive",
+        })
       }
     } catch (error) {
+      // Dismiss loading toast
+      loadingToast.dismiss()
+      
       console.error("Error during registration:", error)
       setServerError("একটি অপ্রত্যাশিত ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।")
+      toast({
+        title: "ত্রুটি",
+        description: "একটি অপ্রত্যাশিত ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।",
+        variant: "destructive",
+      })
     } finally {
       setIsLoading(false)
     }

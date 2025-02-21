@@ -3,29 +3,55 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navbar } from "@/components/Navbar"
 import { Toaster } from "@/components/ui/toaster"
+import { UserProvider } from '@/contexts/User'
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
   title: "পথচ্যুত",
-  description: "A news portal for the people",
-}
+  description: "আমাদের মত পথ হারা সকল মানুষের জন্য আল্লাহ পাঠিয়েছেন ইসলাম। তবে পাশ্চ্যাত্তের লাগাতার আগ্রাশনের পথে আমরা আরো পথ থেকে সরে গিয়েছি। ইসলামের ইতিহাস, পাশ্চাত্যের ব্যার্থ সমাজ, কবরের সদকায়ে জারিয়ার জন্যের আমাদের এই আয়োজন। আল্লাহকে খুশি করার নিয়তে উম্মাহর সাথে থাকুন, নিজের সর্বচ্চ দিয়ে সাহায্য করুন। জাজাকুমুল্লাহ খাইরান।",
+  keywords: "pothoczuto,পথচ্যুত,ওমায়ের,তানভীর,মুখবদ্ধ",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  authors: [{ name: "তানভীর ওমায়ের মুখবদ্ধ" }],
+  metadataBase: new URL('https://pothoczuto.xyz'),
+  openGraph: {
+    title: "পথচ্যুত",
+    description: "আমাদের মত পথ হারা সকল মানুষের জন্য আল্লাহ পাঠিয়েছেন ইসলাম।",
+    url: 'https://pothoczuto.xyz',
+    siteName: 'পথচ্যুত',
+    locale: 'bn_BD',
+    type: 'website',
+  },
+};
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-      
+ 
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className}>
+        <UserProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-        >
-          <Navbar />
+          >
+            <Navbar />
             {children}
             <Toaster />
           </ThemeProvider>
-      </body>
-    </html>
+          </UserProvider>
+        </body>
+      </html>
+    
   )
 }
