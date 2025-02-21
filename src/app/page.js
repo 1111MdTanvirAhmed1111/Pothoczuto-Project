@@ -5,9 +5,9 @@ import { NewsSlider } from "@/components/Home/news-slider"
 import { FollowsSection } from "@/components/Home/follows-section"
 import { ArticleCard } from "@/components/Home/article-card"
 import { DynamicSidebar } from "@/components/Home/dynamic-sidebar"
-
+import { MobileSidebar } from "@/components/Home/mobile-sidebar"
 import { PhotoShorts } from "@/components/Home/photo-shorts"
- 
+
 const articles = [
   {
     title: "কৃত্রিম বুদ্ধিমত্তার ভবিষ্যৎ: নতুন দিগন্ত",
@@ -73,25 +73,30 @@ const articles = [
 
 export default function NewsHomepage() {
   return (
+    <div className="min-h-screen mt-16 bg-background">
+      <main className="container px-4 py-8 pb-24 md:pb-8">
+        {/* Mobile Sidebar Navigation */}
+        <div className="sticky top-[4.5rem] z-40 mb-6">
+          <MobileSidebar />
+        </div>
 
-        
-       
-
-        
-
-        <main className="container grid grid-cols-1 gap-6 py-8 md:grid-cols-[300px_1fr_400px]">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-[300px_1fr_400px]">
+          {/* Left Sidebar - Hidden on Mobile */}
           <aside className="hidden md:block">
-            <Card>
-              <CardContent className="p-0">
-                <FollowsSection />
-                <NewsSlider />
-              </CardContent>
-            </Card>
+            <div className="sticky top-[7rem]">
+              <Card>
+                <CardContent className="p-0">
+                  <FollowsSection />
+                  <NewsSlider />
+                </CardContent>
+              </Card>
+            </div>
           </aside>
 
+          {/* Main Content */}
           <div className="space-y-6">
             <Tabs defaultValue="latest" className="w-full">
-              <TabsList>
+              <TabsList className="w-full justify-start overflow-x-auto">
                 <TabsTrigger value="latest">সর্বশেষ</TabsTrigger>
                 <TabsTrigger value="trending">ট্রেন্ডিং</TabsTrigger>
                 <TabsTrigger value="most-commented">সর্বাধিক মন্তব্য</TabsTrigger>
@@ -113,10 +118,14 @@ export default function NewsHomepage() {
             </Tabs>
           </div>
 
+          {/* Right Sidebar - Hidden on Mobile */}
           <aside className="hidden md:block">
-            <DynamicSidebar />
+            <div className="sticky top-[7rem]">
+              <DynamicSidebar />
+            </div>
           </aside>
-        </main>
-  
+        </div>
+      </main>
+    </div>
   )
 }

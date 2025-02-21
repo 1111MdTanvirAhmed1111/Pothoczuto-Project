@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { ModeToggle } from "./theme-toggler"
-import { Search, LogIn, Menu, X } from "lucide-react"
+import { Search, LogIn } from "lucide-react"
 import { Noto_Sans_Bengali } from "next/font/google"
 import { useUser } from "@/contexts/User"
 import { SettingsBar } from "@/components/Home/settings-bar"
@@ -37,10 +37,7 @@ export function Navbar() {
   const {user, setUser} = useUser()
   const [hasToken, setHasToken] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-
-
 
   useEffect(() => {
     if (user) {
@@ -53,8 +50,6 @@ export function Navbar() {
   useEffect(() => {
     setHasToken(!!user)
 
-
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
     }
@@ -65,7 +60,7 @@ export function Navbar() {
 
   return (
     <>
-      {/* Search Overlay - Moved outside nav */}
+      {/* Search Overlay */}
       <div 
         className={`
           fixed inset-0 bg-black/20 backdrop-blur-sm
@@ -76,9 +71,10 @@ export function Navbar() {
         onClick={() => setIsSearchOpen(false)}
       />
 
-      <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm' : 'bg-white dark:bg-gray-900'
-      }`}>
+      <nav className={`
+        fixed top-0 left-0 right-0 z-50 transition-colors duration-300
+        ${isScrolled ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm' : 'bg-white dark:bg-gray-900'}
+      `}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -106,20 +102,8 @@ export function Navbar() {
               </div>
             </div>
 
-            {/* Right side items with mobile menu button */}
+            {/* Right side items */}
             <div className="flex items-center space-x-4">
-              {/* Mobile menu button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
-              >
-                {isMobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </button>
-
               <DropdownMenu open={isSearchOpen} onOpenChange={setIsSearchOpen}>
                 <DropdownMenuTrigger asChild>
                   <button className="p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors duration-300">
@@ -143,7 +127,7 @@ export function Navbar() {
                   </div>
                 </DropdownMenuContent>
               </DropdownMenu>
-              
+
               {hasToken ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger className="outline-none">
@@ -183,49 +167,10 @@ export function Navbar() {
                   <LogIn className="w-5 h-5" />
                 </Link>
               )}
-              
-              <div className="transition-transform duration-300 hover:scale-105">
-                <ModeToggle />
-              
-              </div>
+
+              <ModeToggle />
               <SettingsBar />
             </div>
-          </div>
-        </div>
-
-        {/* Overlay - Place it before the mobile menu */}
-        <div 
-          className={`
-            fixed inset-0 bg-black/20 backdrop-blur-sm
-            transition-opacity duration-300 ease-in-out
-            md:hidden z-40
-            ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
-          `}
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-
-        {/* Mobile Navigation Menu */}
-        <div 
-          className={`
-            fixed top-0 left-0 h-full w-64 
-            bg-white dark:bg-gray-900 shadow-lg
-            transform transition-transform duration-300 ease-in-out
-            ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
-            md:hidden z-50
-          `}
-        >
-          {/* Add padding top to account for the navbar */}
-          <div className={`flex flex-col space-y-1 p-4 pt-20 ${bengali.className}`}>
-            {navigationLinks.map((link) => (
-              <Link 
-                key={link.href}
-                href={link.href} 
-                className="px-3 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors duration-300"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
           </div>
         </div>
       </nav>

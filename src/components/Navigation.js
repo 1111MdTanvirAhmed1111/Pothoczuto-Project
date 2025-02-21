@@ -42,7 +42,7 @@ export function Navigation({ isOpen, onClose }) {
                 <div 
                     className={`
                         fixed inset-0 bg-black/20 backdrop-blur-sm
-                        transition-opacity duration-300 ease-in-out z-40
+                        transition-opacity duration-300 ease-in-out z-50
                         ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
                     `}
                     onClick={onClose}
