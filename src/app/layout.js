@@ -38,6 +38,9 @@ export default function RootLayout({ children }) {
   return (
  
       <html lang="en" suppressHydrationWarning>
+        <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+        <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap-0.xml" />
+        <link rel="icon" href="/favicon.ico" />
         <body className={inter.className}>
           <FontSizeProvider>
             
