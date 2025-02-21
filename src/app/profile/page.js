@@ -42,7 +42,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function ProfilePage() {
-  const headerRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef(null)
   const { scrollY } = useScroll()
   const [selectedImage, setSelectedImage] = useState(null)
   const [reactions, setReactions] = useState({
@@ -583,4 +583,3 @@ export default function ProfilePage() {
     </div>
   )
 }
-
