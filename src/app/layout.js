@@ -48,6 +48,7 @@ export default function RootLayout({ children }) {
         <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
         <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap-0.xml" />
         <body className={inter.className}>
+        
           <FontSizeProvider>
             
           
@@ -59,11 +60,14 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
             <Navbar />
+            <div className="min-h-screen mt-16 bg-background mx-auto block w-fit">
             {children}
+            </div>
             <Toaster />
           </ThemeProvider>
           </UserProvider>
           </FontSizeProvider>
+      
         </body>
       </html>
     

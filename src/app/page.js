@@ -73,7 +73,7 @@ const articles = [
 
 export default function NewsHomepage() {
   return (
-      <div className="min-h-screen mt-16 bg-background mx-auto block w-fit">
+
         
        
 
@@ -117,7 +117,6 @@ export default function NewsHomepage() {
             <DynamicSidebar />
           </aside>
         </main>
-      </div>
   
   )
 }
