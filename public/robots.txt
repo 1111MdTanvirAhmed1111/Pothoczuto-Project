@@ -1,10 +1,5 @@
-# *
 User-agent: *
-Allow: /
 Disallow: /private/
+Allow: /
 
-# Host
-Host: https://pothoczuto.xyz
-
-# Sitemaps
 Sitemap: https://pothoczuto.xyz/sitemap.xml
