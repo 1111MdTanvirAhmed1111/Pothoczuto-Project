@@ -20,7 +20,7 @@ export default function AuthForms() {
     const password = formData.get("password")
 
     try {
-      const response = await fetch(`${process.env.API_URL}/auth/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
@@ -50,12 +50,12 @@ export default function AuthForms() {
 
     try {
       
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       })
-
+console.log(response)
       if (response.ok) {
         // Handle successful login
         console.log("Login successful")

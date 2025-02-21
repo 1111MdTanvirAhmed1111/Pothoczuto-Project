@@ -34,7 +34,7 @@ const navigationLinks = [
 ]
 
 export function Navbar() {
-  const {user} = useUser()
+  const {user, setUser} = useUser()
   const [hasToken, setHasToken] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -166,7 +166,8 @@ export function Navbar() {
                     <DropdownMenuItem 
                       className="cursor-pointer text-red-600 dark:text-red-400"
                       onClick={() => {
-                        localStorage.removeItem("jwt")
+                        localStorage.removeItem("token")
+                        setUser(null)
                         setHasToken(false)
                       }}
                     >

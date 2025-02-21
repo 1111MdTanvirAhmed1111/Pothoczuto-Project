@@ -20,7 +20,7 @@ const AuthTabs = () => {
 
   const router = useRouter()
   const { setUser } = useUser()
-  console.log(process.env.NEXT_PUBLIC_API_URL, "api url")
+  
   const [isLoading, setIsLoading] = useState(false)
   const [serverError, setServerError] = useState("")
   const { toast } = useToast()
@@ -53,15 +53,16 @@ const AuthTabs = () => {
     })
 
     try {
-      const response = await fetch("https://pothoczuto-project-5kvp.onrender.com/api/auth/login", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
  
-      const ServerResponse = await response.json()
+      const serverResponse = await response.json()
       
-
+      // Dismiss loading toast
+      loadingToast.dismiss()
 
       if (response.ok) {
         toast({
@@ -72,19 +73,13 @@ const AuthTabs = () => {
         router.refresh()
         router.push("/")
 
-        localStorage.setItem("token", ServerResponse.token)
-
-        setUser(await getUserData(ServerResponse.token))
-
-              // Dismiss loading toast
-      loadingToast.dismiss()
-        
+        localStorage.setItem("token", serverResponse.token)
+        setUser(await getUserData(serverResponse.token))
       } else {
-        const errorData = await response.json()
-        setServerError(errorData.message || "লগইন ব্যর্থ হয়েছে")
+        setServerError(serverResponse.message || "লগইন ব্যর্থ হয়েছে")
         toast({
           title: "লগইন ব্যর্থ",
-          description: errorData.message || "লগইন ব্যর্থ হয়েছে",
+          description: serverResponse.message || "লগইন ব্যর্থ হয়েছে",
           variant: "destructive",
         })
       }
@@ -117,12 +112,14 @@ const AuthTabs = () => {
 
     try {
       delete data.confirmPassword
-      const response = await fetch(`${process.env.API_URL}/auth/register`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
 
+      const serverResponse = await response.json()
+      
       // Dismiss loading toast
       loadingToast.dismiss()
 
@@ -133,11 +130,10 @@ const AuthTabs = () => {
           variant: "success",
         })
       } else {
-        const errorData = await response.json()
-        setServerError(errorData.message || "নিবন্ধন ব্যর্থ হয়েছে")
+        setServerError(serverResponse.message || "নিবন্ধন ব্যর্থ হয়েছে")
         toast({
           title: "নিবন্ধন ব্যর্থ",
-          description: errorData.message || "নিবন্ধন ব্যর্থ হয়েছে",
+          description: serverResponse.message || "নিবন্ধন ব্যর্থ হয়েছে",
           variant: "destructive",
         })
       }

@@ -98,10 +98,10 @@ export default function NewsHomepage() {
               </TabsList>
               <TabsContent value="latest" className="mt-6 space-y-6">
                 {articles.map((article, index) => (
-                  <>
-                    <ArticleCard key={index} {...article} />
+                  <div key={index}>
+                    <ArticleCard {...article} />
                     {(index + 1) % 3 === 0 && <PhotoShorts />}
-                  </>
+                  </div>
                 ))}
               </TabsContent>
               <TabsContent value="trending" className="mt-6">
@@ -121,4 +121,3 @@ export default function NewsHomepage() {
   
   )
 }
-

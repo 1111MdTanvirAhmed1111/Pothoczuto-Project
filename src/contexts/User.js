@@ -7,7 +7,7 @@ const UserContext = createContext();
 // Add function to fetch user data
 async function fetchUserData(token) {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}auth/userdata`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/userdata`, {
             headers: {
                 'Authorization': token
             }
