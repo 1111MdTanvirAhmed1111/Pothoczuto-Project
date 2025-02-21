@@ -7,7 +7,7 @@ import { ArticleCard } from "@/components/Home/article-card"
 import { DynamicSidebar } from "@/components/Home/dynamic-sidebar"
 
 import { PhotoShorts } from "@/components/Home/photo-shorts"
-
+ 
 const articles = [
   {
     title: "কৃত্রিম বুদ্ধিমত্তার ভবিষ্যৎ: নতুন দিগন্ত",
