@@ -44,7 +44,6 @@ exports.login = async (req, res) => {
     if (isMatch == true) {
       
       
-      const hashedPassword = await bcrypt.hash(password, 10);
 
       const token = jwt.sign({ id: user._id, password }, process.env.JWT_SECRET, { expiresIn: '1h' });
     
@@ -59,3 +58,56 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
+
+
+exports.getUserData = async (req, res) => {
+  try {
+    // Get the token from the Authorization header
+    const token = req.headers.authorization;
+    
+    if (!token ) {
+      return res.status(401).json({ message: 'No token provided or invalid format' });
+    }
+
+    // Extract the token (remove 'Bearer ' prefix)
+
+
+    try {
+      // Verify the token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      if(!decoded){
+        return res.status(401).json({ message: 'Invalid token' });
+      }
+      // Find user by id (exclude password from response)
+      const user = await User.findById(decoded.id)
+ console.log(user._id)
+      if (!user) {
+        console.log(user)
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Return user data
+      res.status(200).json({
+       
+          _id: user._id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          // Add any other user fields you want to return
+      
+      });
+    } catch (err) {
+      if (err.name === 'JsonWebTokenError') {
+        return res.status(401).json({ message: 'Invalid token' });
+      }
+      if (err.name === 'TokenExpiredError') {
+        return res.status(401).json({ message: 'Token expired' });
+      }
+      throw err;
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+  };
