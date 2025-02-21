@@ -11,6 +11,13 @@ export const metadata = {
   title: "পথচ্যুত",
   description: "আমাদের মত পথ হারা সকল মানুষের জন্য আল্লাহ পাঠিয়েছেন ইসলাম। তবে পাশ্চ্যাত্তের লাগাতার আগ্রাশনের পথে আমরা আরো পথ থেকে সরে গিয়েছি। ইসলামের ইতিহাস, পাশ্চাত্যের ব্যার্থ সমাজ, কবরের সদকায়ে জারিয়ার জন্যের আমাদের এই আয়োজন। আল্লাহকে খুশি করার নিয়তে উম্মাহর সাথে থাকুন, নিজের সর্বচ্চ দিয়ে সাহায্য করুন। জাজাকুমুল্লাহ খাইরান।",
   keywords: "pothoczuto,পথচ্যুত,ওমায়ের,তানভীর,মুখবদ্ধ",
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+
+    ],
+   
+  },
   robots: {
     index: true,
     follow: true,
@@ -40,7 +47,6 @@ export default function RootLayout({ children }) {
       <html lang="en" suppressHydrationWarning>
         <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
         <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap-0.xml" />
-        <link rel="icon" href="/favicon.ico" />
         <body className={inter.className}>
           <FontSizeProvider>
             
