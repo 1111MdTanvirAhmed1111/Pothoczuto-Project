@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Navbar } from "@/components/Navbar"
 import { Toaster } from "@/components/ui/toaster"
 import { UserProvider } from '@/contexts/User'
+import { FontSizeProvider } from '@/contexts/font-size-context';
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
@@ -38,6 +39,9 @@ export default function RootLayout({ children }) {
  
       <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
+          <FontSizeProvider>
+            
+          
         <UserProvider>
           <ThemeProvider
             attribute="class"
@@ -50,6 +54,7 @@ export default function RootLayout({ children }) {
             <Toaster />
           </ThemeProvider>
           </UserProvider>
+          </FontSizeProvider>
         </body>
       </html>
     

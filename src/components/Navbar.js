@@ -6,7 +6,7 @@ import { ModeToggle } from "./theme-toggler"
 import { Search, LogIn, Menu, X } from "lucide-react"
 import { Noto_Sans_Bengali } from "next/font/google"
 import { useUser } from "@/contexts/User"
-
+import { SettingsBar } from "@/components/Home/settings-bar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -185,7 +185,9 @@ export function Navbar() {
               
               <div className="transition-transform duration-300 hover:scale-105">
                 <ModeToggle />
+              
               </div>
+              <SettingsBar />
             </div>
           </div>
         </div>
