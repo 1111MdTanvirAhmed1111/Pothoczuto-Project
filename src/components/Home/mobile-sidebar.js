@@ -1,12 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
-import { LayoutList, Newspaper, Bell, Home, BookOpen, Settings, TrendingUp, User } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { FollowsSection } from "./follows-section"
-import { NewsSlider } from "./news-slider"
-import { DynamicSidebar } from "./dynamic-sidebar"
+import { Home, BookOpen, Settings, User } from "lucide-react"
 import Link from "next/link"
 const navs = [
   {
