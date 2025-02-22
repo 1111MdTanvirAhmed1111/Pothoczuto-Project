@@ -3,9 +3,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { MoreHorizontal } from 'lucide-react'
-import PostClient from './PostClient'
 
-export default function Post() {
+export default function Post({ reactions, toggleLike, toggleBookmark }) {
   return (
     <Card>
       <CardContent className="p-4 sm:p-6">
@@ -36,7 +35,6 @@ export default function Post() {
                 />
               </div>
             </div>
-            <PostClient />
           </div>
         </div>
       </CardContent>

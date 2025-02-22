@@ -2,6 +2,7 @@ import CreatePost from './CreatePost'
 import PhotoGallery from './PhotoGallery'
 import FriendsSection from './FriendsSection'
 import Post from './Post'
+import PostClient from './PostClient'
 
 export default function PostsSection() {
   return (
@@ -9,7 +10,9 @@ export default function PostsSection() {
       <CreatePost />
       <PhotoGallery />
       <FriendsSection />
-      <Post />
+      <PostClient>
+        <Post />
+      </PostClient>
     </div>
   )
 }
