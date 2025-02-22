@@ -8,7 +8,7 @@ const bengali = Noto_Sans_Bengali({
 
 export default function AuthLayout({ children }) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center  py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-6">
         {/* লোগো এবং টাইটেল */}
         <div className="text-center">
@@ -23,7 +23,7 @@ export default function AuthLayout({ children }) {
         </div>
 
         {/* মূল কনটেন্ট */}
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm px-4 sm:px-6">
+        <div className=" backdrop-blur-sm px-4 sm:px-6">
           {children}
         </div>
 

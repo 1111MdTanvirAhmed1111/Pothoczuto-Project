@@ -80,9 +80,11 @@ export default function NewsHomepage() {
           <MobileSidebar />
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-[300px_1fr_400px]">
+        <div className="grid grid-cols-12 gap-4">
+
+
           {/* Left Sidebar - Hidden on Mobile */}
-          <aside className="hidden md:block">
+          <aside className="col-span-12">
             <div className="sticky top-[7rem]">
               <Card>
                 <CardContent className="p-0">
@@ -91,9 +93,18 @@ export default function NewsHomepage() {
               </Card>
             </div>
           </aside>
+        
+     
+          {/* Right Sidebar - Hidden on Mobile */}
+          <aside className="col-span-4 hidden md:block">
+            <div className="sticky top-[7rem]">
+              <DynamicSidebar />
+            </div>
+          </aside>
 
-          {/* Main Content */}
-          <div className="space-y-6">
+
+     {/* Main Content */}
+     <div className=" col-span-8 max-md:col-span-12">
             <Tabs defaultValue="latest" className="w-full">
               <TabsList className="w-full justify-start overflow-x-auto">
                 <TabsTrigger value="latest">সর্বশেষ</TabsTrigger>
@@ -117,13 +128,10 @@ export default function NewsHomepage() {
             </Tabs>
           </div>
 
-          {/* Right Sidebar - Hidden on Mobile */}
-          <aside className="hidden md:block">
-            <div className="sticky top-[7rem]">
-              <DynamicSidebar />
-            </div>
-          </aside>
+
         </div>
+
+        
       </main>
     </div>
   )
