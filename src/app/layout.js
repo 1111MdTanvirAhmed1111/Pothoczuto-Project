@@ -7,6 +7,7 @@ import { UserProvider } from '@/contexts/User'
 import { FontSizeProvider } from '@/contexts/font-size-context';
 const inter = Inter({ subsets: ["latin"] })
 
+
 export const metadata = {
   title: "পথচ্যুত",
   description: "আমাদের মত পথ হারা সকল মানুষের জন্য আল্লাহ পাঠিয়েছেন ইসলাম। তবে পাশ্চ্যাত্তের লাগাতার আগ্রাশনের পথে আমরা আরো পথ থেকে সরে গিয়েছি। ইসলামের ইতিহাস, পাশ্চাত্যের ব্যার্থ সমাজ, কবরের সদকায়ে জারিয়ার জন্যের আমাদের এই আয়োজন। আল্লাহকে খুশি করার নিয়তে উম্মাহর সাথে থাকুন, নিজের সর্বচ্চ দিয়ে সাহায্য করুন। জাজাকুমুল্লাহ খাইরান।",
@@ -60,7 +61,9 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
             <Navbar />
-            <div className="min-h-screen mt-16 bg-background mx-auto block w-fit">
+            
+            <div className="min-h-screen bg-background mx-auto block w-fit mt-16">
+     
             {children}
             </div>
             <Toaster />

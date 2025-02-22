@@ -19,7 +19,7 @@ import {
   AvatarFallback,
 } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
-
+import { Breadcrumbs } from "@/components/BreadCrumb"
 const bengali = Noto_Sans_Bengali({ 
   subsets: ["bengali"],
   weight: ['400', '500', '600', '700'],
@@ -173,6 +173,7 @@ export function Navbar() {
             </div>
           </div>
         </div>
+        <Breadcrumbs />
       </nav>
     </>
   )

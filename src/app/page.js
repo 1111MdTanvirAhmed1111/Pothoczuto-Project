@@ -73,7 +73,7 @@ const articles = [
 
 export default function NewsHomepage() {
   return (
-    <div className="min-h-screen mt-16 bg-background">
+    <div className="min-h-screen  bg-background">
       <main className="container px-4 py-8 pb-24 md:pb-8">
         {/* Mobile Sidebar Navigation */}
         <div className="sticky top-[4.5rem] z-40 mb-6">
@@ -87,7 +87,6 @@ export default function NewsHomepage() {
               <Card>
                 <CardContent className="p-0">
                   <FollowsSection />
-                  <NewsSlider />
                 </CardContent>
               </Card>
             </div>

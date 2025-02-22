@@ -66,12 +66,12 @@ export function FollowsSection() {
   }, [api])
 
   return (
-    <Card className="mb-2 p-2"> {/* Reduced margin-bottom to mb-2 and added p-2 for external padding */}
-      <CardHeader className="border-b pb-3"> {/* Reduced padding-bottom to pb-3 */}
+    <Card className="mb-2 "> {/* Reduced margin-bottom to mb-2 and added p-2 for external padding */}
+      <CardHeader className="border-b px-4 py-1"> {/* Reduced padding-bottom to pb-3 */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-semibold">আপনার অনুসরণকারী</h2>
-            <p className="text-sm text-muted-foreground">সর্বমোট {followers.length} জন</p>
+            <h2 className="text-lg font-semibold">আপনার অনুসরণকারী</h2>
+            <p className="text-xs text-muted-foreground">সর্বমোট {followers.length} জন</p>
           </div>
           <Badge variant="secondary" className="px-2 py-0.5"> {/* Reduced py-1 to py-0.5 */}
             <span className="animate-pulse mr-1 inline-block h-1.5 w-1.5 rounded-full bg-green-500" />
