@@ -6,12 +6,12 @@
     },
     {
       "source": "/sitemap.xml",
-      "destination": "/public/sitemap.xml"
+      "destination": "/api/sitemap"
     }
   ],
   "headers": [
     {
-      "source": "/sitemap.xml",
+      "source": "/api/sitemap",
       "headers": [
         {
           "key": "Cache-Control",
