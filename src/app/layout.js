@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar"
 import { Toaster } from "@/components/ui/toaster"
 import { UserProvider } from '@/contexts/User'
 import { FontSizeProvider } from '@/contexts/font-size-context';
+import {MobileSidebar} from '@/components/Home/mobile-sidebar'
 const inter = Inter({ subsets: ["latin"] })
 
 
@@ -61,7 +62,7 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
             <Navbar />
-            
+            <MobileSidebar />
             <div className="min-h-screen bg-background mx-auto block w-fit mt-16">
      
             {children}

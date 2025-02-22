@@ -5,7 +5,6 @@ import { NewsSlider } from "@/components/Home/news-slider"
 import { FollowsSection } from "@/components/Home/follows-section"
 import { ArticleCard } from "@/components/Home/article-card"
 import { DynamicSidebar } from "@/components/Home/dynamic-sidebar"
-import { MobileSidebar } from "@/components/Home/mobile-sidebar"
 import { PhotoShorts } from "@/components/Home/photo-shorts"
 
 const articles = [
@@ -76,9 +75,9 @@ export default function NewsHomepage() {
     <div className="min-h-screen  bg-background">
       <main className="container px-4 py-8 pb-24 md:pb-8">
         {/* Mobile Sidebar Navigation */}
-        <div className="sticky top-[4.5rem] z-40 mb-6">
-          <MobileSidebar />
-        </div>
+
+      
+    
 
         <div className="grid grid-cols-12 gap-4">
 
