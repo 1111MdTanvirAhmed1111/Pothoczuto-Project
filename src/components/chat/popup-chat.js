@@ -53,7 +53,7 @@ export default function PopupChat() {
   }
 
   return (
-chat &&
+// chat &&
     <Card className="fixed bottom-4 right-4 w-80 shadow-lg">
       {/* Chat Header */}
       <CardHeader className="p-3 border-b flex flex-row items-center space-x-2 space-y-0">
