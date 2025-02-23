@@ -36,7 +36,7 @@ try {
   
 
     // Find or create the chatting document
-    let chatting = await Chatting.findOne({ from, to });
+    let chatting = await Chatting.findOne({ from, to }) || await Chatting.findOne({ from:to, to:from });
 
 
 
