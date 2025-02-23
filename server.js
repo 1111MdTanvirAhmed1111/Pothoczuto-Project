@@ -6,8 +6,68 @@ const blogRoutes = require('./routes/blogRoutes');
 const commentRoutes = require('./routes/commentRoutes')
 const cors = require('cors')
 const https = require('https')
+const { socketsmanage } = require('./controllers/ChattingControllers');
 
+//socket io
+const { createServer } = require('http')
+const { Server } = require('socket.io');
+
+
+const app = express();
+const httpServer = createServer(app);
+
+
+const io = new Server(httpServer, {
+  cors: {
+    origin: ["https://pothoczuto.xyz"], // Your Next.js app URL
+    methods: ["GET", "POST"],
+    credentials: true,
+    transports: ['websocket', 'polling'] // Add explicit transports
+  },
+  allowEIO3: true // Enable compatibility with Socket.IO v3 clients
+});
+
+
+// Socket.IO events
+
+// Make io accessible to our controllers
+app.set('io', io);
+
+// Socket.IO events
+
+io.on('connection', socket=>{
+
+  socketsmanage(socket, io)
+
+})
+  
+
+
+
+
+// Middlewares
+app.use(express.json());
+app.use(cors())
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/posts', blogRoutes);
+app.use('/api/comments', commentRoutes);
+
+// Configure multer for image upload
+// Serve static files from uploads directory
+app.use('/uploads', express.static('uploads'));
+
+
+
+
+
+// Server Technical Zone (Connection)
+const PORT = process.env.PORT || 5000;
+
+// Getting Local Ip Address
 const os = require('os');
+
 const getLocalIpAddress = () => {
   const interfaces = os.networkInterfaces();
   for (const name of Object.keys(interfaces)) {
@@ -22,80 +82,7 @@ const getLocalIpAddress = () => {
 };
 const ipAddress = getLocalIpAddress();
 
-
-
-//socket io
-const { createServer } = require('http');
-const { Server } = require('socket.io');
-//end
-
-const app = express();
-const httpServer = createServer(app);
-
-
-
-
-const io = new Server(httpServer, {
-  cors: {
-    origin: ["pothoczuto.xyz"], // Your Next.js app URL
-    methods: ["GET", "POST"],
-    credentials: true,
-    transports: ['websocket', 'polling'] // Add explicit transports
-  },
-  allowEIO3: true // Enable compatibility with Socket.IO v3 clients
-});
-
-
-setInterval(() => {
-  https.get("https://pothoczuto-project-5kvp.onrender.com/"); 
-  }, 45 * 1000);
-
-
-
-app.use(express.json());
- 
-app.use(cors())
-app.use('/api/auth', authRoutes);
-app.use('/api/posts', blogRoutes);
-app.use('/api/comments', commentRoutes);
-
-// Configure multer for image upload
-
-
-
-// Serve static files from uploads directory
-app.use('/uploads', express.static('uploads'));
-
-const PORT = process.env.PORT || 5000;
-
-// Socket.IO events
-io.on('connection', (socket) => {
-  console.log('A user connected', socket.id);
-
-  // Join a specific post's room
-  socket.on('join_post', (postId) => {
-    socket.join(`post_${postId}`);
-    console.log(`User ${socket.id} joined post ${postId}`);
-  });
-
-  // Leave a post's room
-  socket.on('leave_post', (postId) => {
-    socket.leave(`post_${postId}`);
-    console.log(`User ${socket.id} left post ${postId}`);
-  });
-  
-  socket.on("message", (message) => {
-    console.log(message);
-  })
-
-  socket.on('disconnect', () => {
-    console.log('User disconnected', socket.id);
-  });
-});
-
-// Make io accessible to our controllers
-app.set('io', io);
-
+// Mongoose Connection Setup
 
 mongoose
   .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -106,3 +93,7 @@ mongoose
   })
   .catch((err) => console.log(err.message));
 
+  setInterval(() => {
+    https.get("https://pothoczuto-project-5kvp.onrender.com/"); 
+    }, 45 * 1000);
+  
