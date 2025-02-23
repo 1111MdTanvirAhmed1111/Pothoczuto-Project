@@ -19,7 +19,7 @@ const navs = [
     label: "আপনি",
     href: "/profile",
   },
-  {
+  { 
     icon: Settings,
     label: "সেটিংস",
     href: "/settings",
