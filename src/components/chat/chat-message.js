@@ -1,17 +1,6 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-interface ChatMessageProps {
-  content: string
-  sender: {
-    name: string
-    avatar?: string
-  }
-  timestamp: Date
-  status?: "sent" | "delivered" | "read"
-  isCurrentUser: boolean
-}
-
-export function ChatMessage({ content, sender, timestamp, status, isCurrentUser }: ChatMessageProps) {
+export function ChatMessage({ content, sender, timestamp, status, isCurrentUser }) {
   return (
     <div className={`flex ${isCurrentUser ? "justify-end" : "justify-start"}`}>
       <div className={`flex gap-2 max-w-[70%] ${isCurrentUser ? "flex-row-reverse" : ""}`}>
@@ -32,6 +21,5 @@ export function ChatMessage({ content, sender, timestamp, status, isCurrentUser 
         </div>
       </div>
     </div>
-  )
+  );
 }
-

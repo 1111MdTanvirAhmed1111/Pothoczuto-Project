@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/toaster"
 import { UserProvider } from '@/contexts/User'
 import { FontSizeProvider } from '@/contexts/font-size-context';
 import {MobileSidebar} from '@/components/Home/mobile-sidebar'
+import PopupChat from './../components/chat/popup-chat';
+import { ChatProvider } from './../contexts/chat-context';
 const inter = Inter({ subsets: ["latin"] })
 
 
@@ -53,6 +55,8 @@ export default function RootLayout({ children }) {
         
           <FontSizeProvider>
             
+          <ChatProvider>
+
           
         <UserProvider>
           <ThemeProvider
@@ -67,9 +71,11 @@ export default function RootLayout({ children }) {
      
             {children}
             </div>
+            <PopupChat/>
             <Toaster />
           </ThemeProvider>
           </UserProvider>
+          </ChatProvider>
           </FontSizeProvider>
       
         </body>

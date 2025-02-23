@@ -1,24 +1,7 @@
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-interface Conversation {
-  id: string
-  user: {
-    name: string
-    avatar?: string
-  }
-  lastMessage: string
-  timestamp: string
-  unread?: boolean
-}
-
-interface ConversationListProps {
-  conversations: Conversation[]
-  activeId?: string
-  onSelect: (id: string) => void
-}
-
-export function ConversationList({ conversations, activeId, onSelect }: ConversationListProps) {
+export function ConversationList({ conversations, activeId, onSelect }) {
   return (
     <ScrollArea className="h-[calc(80vh-73px)]">
       <div className="p-2 space-y-2">
@@ -46,6 +29,5 @@ export function ConversationList({ conversations, activeId, onSelect }: Conversa
         ))}
       </div>
     </ScrollArea>
-  )
+  );
 }
-

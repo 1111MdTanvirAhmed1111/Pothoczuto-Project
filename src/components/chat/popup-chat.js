@@ -7,17 +7,13 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useChat } from '@/contexts/chat-context'
 
-interface Message {
-  id: string
-  content: string
-  sender: "user" | "other"
-  timestamp: Date
-}
 
 export default function PopupChat() {
+  const {chat,setChat} = useChat()
   const [isMinimized, setIsMinimized] = React.useState(false)
-  const [messages, setMessages] = React.useState<Message[]>([
+  const [messages, setMessages] = React.useState([
     {
       id: "1",
       content: "Hey! How are you?",
@@ -32,7 +28,8 @@ export default function PopupChat() {
     },
   ])
   const [input, setInput] = React.useState("")
-  const scrollRef = React.useRef<HTMLDivElement>(null)
+
+  const scrollRef = React.useRef(null)
 
   React.useEffect(() => {
     if (scrollRef.current) {
@@ -40,11 +37,11 @@ export default function PopupChat() {
     }
   }, [])
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = (e) => {
     e.preventDefault()
     if (!input.trim()) return
 
-    const newMessage: Message = {
+    const newMessage = {
       id: Date.now().toString(),
       content: input,
       sender: "user",
@@ -56,6 +53,7 @@ export default function PopupChat() {
   }
 
   return (
+chat &&
     <Card className="fixed bottom-4 right-4 w-80 shadow-lg">
       {/* Chat Header */}
       <CardHeader className="p-3 border-b flex flex-row items-center space-x-2 space-y-0">
@@ -138,7 +136,7 @@ export default function PopupChat() {
                 <Button type="button" variant="ghost" size="icon" className="h-8 w-8">
                   <Smile className="h-4 w-4" />
                 </Button>
-                <Button type="submit" size="icon" className="h-8 w-8">
+                <Button type="submit" size="icon" className="h-8 w-8 px-10">
                   <Send className="h-4 w-4" />
                 </Button>
               </form>
@@ -149,4 +147,3 @@ export default function PopupChat() {
     </Card>
   )
 }
-

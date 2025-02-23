@@ -1,34 +1,16 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Send, Paperclip, Image, Smile, MoreVertical, Phone, Video } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-
-interface Message {
-  id: string
-  content: string
-  sender: string
-  timestamp: Date
-  status: "sent" | "delivered" | "read"
-  type: "text" | "image"
-  senderAvatar?: string
-}
-
-interface ChatUser {
-  id: string
-  name: string
-  avatar?: string
-  status: "online" | "offline"
-  lastSeen?: Date
-}
+import * as React from "react";
+import { Send, Paperclip, Image, Smile, MoreVertical, Phone, Video } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export default function ChatLayout() {
-  const [messages, setMessages] = React.useState<Message[]>([
+  const [messages, setMessages] = React.useState([
     {
       id: "1",
       content: "Hey, how are you?",
@@ -45,47 +27,47 @@ export default function ChatLayout() {
       status: "read",
       type: "text",
     },
-  ])
-  const [isTyping, setIsTyping] = React.useState(false)
-  const [inputValue, setInputValue] = React.useState("")
-  const scrollRef = React.useRef<HTMLDivElement>(null)
+  ]);
+  const [isTyping, setIsTyping] = React.useState(false);
+  const [inputValue, setInputValue] = React.useState("");
+  const scrollRef = React.useRef(null);
 
-  const currentUser: ChatUser = {
+  const currentUser = {
     id: "user1",
     name: "John Doe",
     status: "online",
     avatar: "/placeholder.svg?height=32&width=32",
-  }
+  };
 
-  const otherUser: ChatUser = {
+  const otherUser = {
     id: "user2",
     name: "Jane Smith",
     status: "online",
     avatar: "/placeholder.svg?height=32&width=32",
-  }
+  };
 
   React.useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages])
+  }, [messages]);
 
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!inputValue.trim()) return
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (!inputValue.trim()) return;
 
-    const newMessage: Message = {
+    const newMessage = {
       id: Date.now().toString(),
       content: inputValue,
       sender: currentUser.id,
       timestamp: new Date(),
       status: "sent",
       type: "text",
-    }
+    };
 
-    setMessages((prev) => [...prev, newMessage])
-    setInputValue("")
-  }
+    setMessages((prev) => [...prev, newMessage]);
+    setInputValue("");
+  };
 
   return (
     <Card className="w-full max-w-4xl mx-auto h-[80vh] grid grid-cols-[280px_1fr]">
@@ -163,22 +145,15 @@ export default function ChatLayout() {
         <ScrollArea ref={scrollRef} className="flex-1 p-4">
           <div className="space-y-4">
             {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.sender === currentUser.id ? "justify-end" : "justify-start"}`}
-              >
-                <div
-                  className={`flex gap-2 max-w-[70%] ${message.sender === currentUser.id ? "flex-row-reverse" : ""}`}
-                >
+              <div key={message.id} className={`flex ${message.sender === currentUser.id ? "justify-end" : "justify-start"}`}>
+                <div className={`flex gap-2 max-w-[70%] ${message.sender === currentUser.id ? "flex-row-reverse" : ""}`}>
                   <Avatar className="h-6 w-6">
                     <AvatarImage src={message.sender === currentUser.id ? currentUser.avatar : otherUser.avatar} />
                     <AvatarFallback>{message.sender === currentUser.id ? "JD" : "JS"}</AvatarFallback>
                   </Avatar>
                   <div>
                     <div
-                      className={`rounded-lg px-3 py-2 ${
-                        message.sender === currentUser.id ? "bg-primary text-primary-foreground" : "bg-muted"
-                      }`}
+                      className={`rounded-lg px-3 py-2 ${message.sender === currentUser.id ? "bg-primary text-primary-foreground" : "bg-muted"}`}
                     >
                       {message.content}
                     </div>
@@ -233,6 +208,5 @@ export default function ChatLayout() {
         </div>
       </div>
     </Card>
-  )
+  );
 }
-
