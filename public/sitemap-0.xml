@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://pothoczuto.xyz/api/sitemap</loc><lastmod>2025-02-22T09:20:55.893Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://pothoczuto.xyz/sitemap.xml</loc><lastmod>2025-02-22T09:20:55.893Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://pothoczuto.xyz/profile</loc><lastmod>2025-02-22T09:20:55.893Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://pothoczuto.xyz</loc><lastmod>2025-02-22T09:20:55.893Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/api/sitemap</loc><lastmod>2025-02-23T08:27:06.463Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/sitemap.xml</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/admin/analytics</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/profile</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/admin/blog-posts</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/admin/comments</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/admin/posts</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/admin</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/admin/settings</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/admin/categories</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/admin/users</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/settings/advanced</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/settings/help</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/settings/language</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/settings/notifications</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/settings/privacy</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/settings/security</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://pothoczuto.xyz/settings/display</loc><lastmod>2025-02-23T08:27:06.464Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>

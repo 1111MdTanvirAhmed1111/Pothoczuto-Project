@@ -39,7 +39,7 @@ import {
     }
   
     const breadcrumbItems = generateBreadcrumbItems()
-  console.log(breadcrumbItems)
+  
     return (
         <div>
 {

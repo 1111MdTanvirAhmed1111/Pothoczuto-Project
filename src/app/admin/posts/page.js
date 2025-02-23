@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { getPosts, createPost, updatePost, deletePost } from '@/app/actions/posts'
+
 
 // Mock data for blog posts
 const initialBlogPosts = [
@@ -33,18 +33,18 @@ export default function PostsPage() {
   }, [])
 
   const fetchPosts = async () => {
-    const { posts, error } = await getPosts()
-    if (posts) {
-      setBlogPosts(posts)
-    }
+    // const { posts, error } = await getPosts()
+    // if (posts) {
+    //   setBlogPosts(posts)
+    // }
   }
 
   const handleCreate = async () => {
-    const { post, error } = await createPost(newPost)
-    if (post) {
-      setBlogPosts([...blogPosts, post])
-      setNewPost({ title: '', author: '', date: '', category: '', content: '' })
-    }
+    // const { post, error } = await createPost(newPost)
+    // if (post) {
+    //   setBlogPosts([...blogPosts, post])
+    //   setNewPost({ title: '', author: '', date: '', category: '', content: '' })
+    // }
   }
 
   const handleEdit = (post) => {
@@ -52,18 +52,18 @@ export default function PostsPage() {
   }
 
   const handleUpdate = async () => {
-    const { post, error } = await updatePost(editingPost._id, editingPost)
-    if (post) {
-      setBlogPosts(blogPosts.map(p => p._id === post._id ? post : p))
-      setEditingPost(null)
-    }
+    // const { post, error } = await updatePost(editingPost._id, editingPost)
+    // if (post) {
+    //   setBlogPosts(blogPosts.map(p => p._id === post._id ? post : p))
+    //   setEditingPost(null)
+    // }
   }
 
   const handleDelete = async (id) => {
-    const { success, error } = await deletePost(id)
-    if (success) {
+    // const { success, error } = await deletePost(id)
+    // if (success) {
       setBlogPosts(blogPosts.filter(post => post._id !== id))
-    }
+    // }
   }
 
   return (

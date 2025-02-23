@@ -18,7 +18,7 @@ export default function SettingsLayout({
       <aside className="lg:w-1/5">
         <SettingsSidebar />
       </aside>
-      <Separator orientation="vertical" className="hidden lg:block" />
+      <Separator/>
       <div className="flex-1 lg:max-w-3xl">{children}</div>
     </div>
   )
