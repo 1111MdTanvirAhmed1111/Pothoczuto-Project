@@ -15,10 +15,10 @@ import {
   CarouselApi,
 } from "@/components/ui/carousel"
 import { useEffect, useState } from "react"
-
+import MesseegeButtonParent from "../chat/MessegeWorker"
 const followers = [
   {
-    id: 1,
+    _id: 1,
     name: "রহিম আহমেদ",
     image: "/placeholder-user.jpg",
     isOnline: true,
@@ -26,14 +26,14 @@ const followers = [
     isFollowing: true,
   },
   {
-    id: 2,
+    _id: 2,
     name: "ফাতেমা খাতুন",
     image: "/placeholder-user.jpg",
     isOnline: true,
     mutualFriends: 8,
   },
   {
-    id: 3,
+    _id: 3,
     name: "করিম মিয়া",
     image: "/placeholder-user.jpg",
     isOnline: false,
@@ -42,7 +42,7 @@ const followers = [
     isFollowing: true,
   },
   {
-    id: 4,
+    _id: 4,
     name: "জান্নাত আরা",
     image: "/placeholder-user.jpg",
     isOnline: true,
@@ -91,7 +91,7 @@ export function FollowsSection() {
           <CarouselContent className="flex gap-4"> {/* Reduced gap to 4 for tighter spacing */}
             {followers.map((follower) => (
               <CarouselItem
-                key={follower.id}
+                key={follower._id}
                 className="basis-[300px] flex-shrink-0"
               >
                 <motion.div
@@ -143,14 +143,18 @@ export function FollowsSection() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 opacity-75 transition-opacity group-hover:opacity-100"
-                          >
+                          > <MesseegeButtonParent receiverId={follower._id}>  
                             <MessageSquare className="h-4 w-4" />
+                            </MesseegeButtonParent>
                           </Button>
+                         
                           <Button
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 opacity-75 transition-opacity group-hover:opacity-100"
                           >
+                            
+                           
                             <UserPlus className="h-4 w-4" />
                           </Button>
                         </div>
@@ -161,7 +165,7 @@ export function FollowsSection() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          {/* Position slider buttons inside the carousel */}
+          {/* Position sl_ider buttons ins_ide the carousel */}
           <CarouselPrevious className="absolute left-2 top-1/2 translate-y-14 z-10 bg-black dark:bg-white text-white hover:text-black dark:hover:text-white dark:text-black hover:bg-gray-200 dark:hover:bg-gray-800 rounded-md p-1" />
           <CarouselNext className="absolute right-2 top-1/2 translate-y-14 z-10 bg-black dark:bg-white text-white hover:text-black dark:hover:text-white dark:text-black hover:bg-gray-200 dark:hover:bg-gray-800 rounded-md p-1" />
         </Carousel>
@@ -174,7 +178,7 @@ export function FollowsSection() {
                 current === index ? "bg-primary" : "bg-muted"
               }`}
               onClick={() => api?.scrollTo(index)}
-              aria-label={`Go to slide ${index + 1}`}
+              aria-label={`Go to sl_ide ${index + 1}`}
             />
           ))}
         </div>

@@ -8,6 +8,7 @@
 
  export function ChatProvider({ children }) {
 const [chat,setChat] = useState(null)
+console.log(chat)
  
      return (
          <ChatContext.Provider value={{ chat, setChat }}>

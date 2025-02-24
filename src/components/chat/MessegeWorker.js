@@ -1,13 +1,25 @@
 import { useUser } from '@/contexts/User'
-function MesseegeButtonParent({receiverId,children}) {
-  const {_id}= useUser()
-  console.log(_id,receiverId)
+import { useChat } from '@/contexts/chat-context'
 
+export default function MesseegeButtonParent({receiverId,children}) {
+  const {user,setUser}= useUser()
+
+  const {chat,setChat} = useChat()
   return (
     <div>
-      {children}
+      
+
+    {user&&<button onClick={()=>{
+      setChat({
+    from:user._id,
+    to:receiverId,
+    content:''
+      })
+    }}>
+{children}
+
+    </button>}
+
     </div>
   )
 }
-
-export default MessegeButtonParent
