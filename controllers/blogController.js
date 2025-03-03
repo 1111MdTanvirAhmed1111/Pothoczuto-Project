@@ -19,8 +19,16 @@ async function GetPosts(req, res) {
         res.status(404).json({ title: "Post Not Found" });
       }
     } else {
+
+      const page = parseInt(req.query.page) || 1; // Default page is 1
+      const pageSize = parseInt(req.query.pageSize) || 10; // Default page size is 10
+    
+      const skip = (page - 1) * pageSize; // Skip the posts already shown in previous pages
+      const take = pageSize; // Limit the number of posts per page
+
       const posts = await prisma.post.findMany({
-        take: limit ? parseInt(limit) : undefined,
+        skip: skip,
+        take: take,
       });
       res.status(200).json(posts);
     }

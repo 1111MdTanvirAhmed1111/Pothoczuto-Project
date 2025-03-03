@@ -94,6 +94,6 @@ mongoose
   .catch((err) => console.log(err.message));
 
   setInterval(() => {
-    https.get("https://pothoczuto-backend.onrender.com/"); 
+    https.get("https://pothoc zuto-backend.onrender.com/"); 
     }, 45 * 1000);
   
