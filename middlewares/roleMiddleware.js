@@ -1,9 +1,9 @@
-const User = require('../models/User');
 
 const roleMiddleware = (requiredRole) => async (req, res, next) => {
   try {
+    console.log()
 
-    if (req.user.role !== requiredRole) {
+    if (req.user.role.toLowerCase() !== requiredRole) {
       return res.status(403).json({ message: 'Access denied. Insufficient permissions.' });
     }
 

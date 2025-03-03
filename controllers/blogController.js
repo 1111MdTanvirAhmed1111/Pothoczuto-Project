@@ -1,66 +1,54 @@
 const fs = require('fs');
 const path = require('path');
+const { PrismaClient } = require('@prisma/client');
 
-// Assuming you have a Post model like this:
-const Post = require('../models/Post') // Path to your Post model
+const prisma = new PrismaClient();
 
 // Get all posts or a specific post
 async function GetPosts(req, res) {
-  const { id } = req.query;
-const {limit} = req.query
+  const { id, limit } = req.query;
 
-
-
- 
-
-    try {
-      id 
-      
-      ?
-      
-    await Post.findById(id) ?   res.status(200).json(await Post.findById(id)) 
-      
-      
-      : res.status(404).json({ "title": "Post Not Found" })
-      
-
-
-
-      
-      
-      :  res.status(200).json(await Post.find({}).limit(limit ? limit : 0 )) 
-
-
-
-    } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' });
+  try {
+    if (id) {
+      const post = await prisma.post.findUnique({
+        where: { id },
+      });
+      if (post) {
+        res.status(200).json(post);
+      } else {
+        res.status(404).json({ title: "Post Not Found" });
+      }
+    } else {
+      const posts = await prisma.post.findMany({
+        take: limit ? parseInt(limit) : undefined,
+      });
+      res.status(200).json(posts);
     }
-
-
-
-
-
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 }
 
 // Create a new post
 const createPost = async (req, res) => {
   try {
     if (!req.body.Pdata) {
-      return res.status(400).json({ "error": "Please Provide Details" });
+      return res.status(400).json({ error: "Please Provide Details" });
     }
 
     const { title, content, author, category } = JSON.parse(req.body.Pdata);
     const imageUrl = req.file ? `./uploads/blogs/images/${req.file.filename}` : "null";
 
-    const post = await Post.create({
-      title,
-      content,
-      author,
-      category,
-      imageUrl
+    const post = await prisma.post.create({
+      data: {
+        title,
+        content,
+        author,
+        category,
+        imageUrl,
+      },
     });
 
-    // Emit new post event to all connected clients
     const io = req.app.get('io');
     io.emit('new_post', post);
 
@@ -73,29 +61,29 @@ const createPost = async (req, res) => {
   }
 };
 
-
 // Update a post
 async function updatePost(req, res) {
   const { id } = req.params;
 
   if (!req.body.Pdata) {
-    return res.status(404).json({ "error": "Please Provide Details" });
+    return res.status(404).json({ error: "Please Provide Details" });
   }
 
   try {
-    const post = await Post.findById(id);
-    if (!post) {
-      return res.status(404).json({ "error": "Post not found" });
+    const existingPost = await prisma.post.findUnique({
+      where: { id },
+    });
+
+    if (!existingPost) {
+      return res.status(404).json({ error: "Post not found" });
     }
 
     const { title, content, author, category } = JSON.parse(req.body.Pdata);
+    let imageUrl = existingPost.imageUrl;
 
-    // Handle image update
-    let imageUrl = post.imageUrl; // Keep old image by default
     if (req.file) {
-      // Delete old image if exists
-      if (post.imageUrl && post.imageUrl !== "null") {
-        const oldImagePath = path.join(__dirname, '..', post.imageUrl);
+      if (existingPost.imageUrl && existingPost.imageUrl !== "null") {
+        const oldImagePath = path.join(__dirname, '..', existingPost.imageUrl);
         if (fs.existsSync(oldImagePath)) {
           fs.unlinkSync(oldImagePath);
         }
@@ -103,22 +91,17 @@ async function updatePost(req, res) {
       imageUrl = `./uploads/blogs/images/${req.file.filename}`;
     }
 
-    
-
-    // Using findByIdAndUpdate() instead of save()
-    const updatedPost = await Post.findByIdAndUpdate(
-      id,
-      {
+    const updatedPost = await prisma.post.update({
+      where: { id },
+      data: {
         title,
         content,
         author,
         category,
-        imageUrl
+        imageUrl,
       },
-      { new: true } // Returns the updated document
-    );
+    });
 
-    // Emit update event to clients in this post's room
     const io = req.app.get('io');
     io.to(`post_${id}`).emit('post_updated', updatedPost);
 
@@ -136,13 +119,14 @@ async function deletePost(req, res) {
   const { id } = req.params;
 
   try {
-    const post = await Post.findById(id);
+    const post = await prisma.post.findUnique({
+      where: { id },
+    });
 
     if (!post) {
-      return res.status(404).json({ "error": "Post not found" });
+      return res.status(404).json({ error: "Post not found" });
     }
 
-    // Delete the image file if exists
     if (post.imageUrl && post.imageUrl !== "null") {
       const imagePath = path.join(__dirname, '..', post.imageUrl.replace('.', ''));
       console.log('Attempting to delete image at:', imagePath);
@@ -157,10 +141,10 @@ async function deletePost(req, res) {
       }
     }
 
-    // Delete the post from database
-    await Post.findByIdAndDelete(id);
+    await prisma.post.delete({
+      where: { id },
+    });
 
-    // Emit delete event to all clients
     const io = req.app.get('io');
     io.emit('post_deleted', id);
 

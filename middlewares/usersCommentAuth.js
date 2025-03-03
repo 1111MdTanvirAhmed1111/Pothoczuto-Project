@@ -1,23 +1,38 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const Comment = require('../models/Comment');
+const { PrismaClient } = require('@prisma/client');
+
+const prisma = new PrismaClient();
 
 const usersCommentAuthenticate = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '');
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
+
+        // Find user by ID and check if token exists in user's tokens array
+        const user = await prisma.user.findFirst({
+            where: {
+                id: decoded._id,
+                tokens: {
+                    some: {
+                        token: token,
+                    },
+                },
+            },
+        });
 
         if (!user) {
             throw new Error();
         }
 
-        const comment = await Comment.findById(req.params.commentId);
+        const comment = await prisma.comment.findUnique({
+            where: { id: req.params.commentId },
+        });
+
         if (!comment) {
             return res.status(404).send({ error: 'Comment not found' });
         }
 
-        if (comment.userId.toString() !== user._id.toString()) {
+        if (comment.createdBy !== user.id) {
             return res.status(403).send({ error: 'User not authorized to access this comment' });
         }
 
