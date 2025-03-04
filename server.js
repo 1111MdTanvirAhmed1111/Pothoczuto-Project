@@ -84,16 +84,11 @@ const ipAddress = getLocalIpAddress();
 
 // Mongoose Connection Setup
 
-mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('Connected to MongoDB', ipAddress);
-    // Use httpServer instead of app.listen
-    httpServer.listen(PORT, () => console.log(`Server running on port ${ipAddress}:${PORT}`));
-  })
-  .catch((err) => console.log(err.message));
+
+   httpServer.listen(PORT, () => console.log(`Server running on port ${ipAddress}:${PORT}`));
+
 
   setInterval(() => {
-    https.get("https://pothoc zuto-backend.onrender.com/"); 
+    https.get("https://pothoczuto-backend.onrender.com/"); 
     }, 45 * 1000);
   
