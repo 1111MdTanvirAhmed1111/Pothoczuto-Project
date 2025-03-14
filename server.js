@@ -11,7 +11,7 @@ const { socketsmanage } = require('@/config/socket'); // Updated
 const { errorHandler, notFoundHandler } = require('@/utils/errorHandler'); // Updated
 const os = require('os');
 const path = require('path');
-
+const chattingRoutes = require('@/routes/chattingRoutes')
 //socket io
 const { createServer } = require('http')
 const { Server } = require('socket.io');
@@ -59,7 +59,7 @@ app.use(cors())
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', blogRoutes);
 app.use('/api/comments', commentRoutes);
-
+app.use('/api/chattings',chattingRoutes)
 // Configure multer for image upload
 // Serve static files from uploads directory
 
