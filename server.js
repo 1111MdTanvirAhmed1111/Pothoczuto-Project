@@ -1,12 +1,16 @@
+require('module-alias/register');
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/authRoutes');
-const blogRoutes = require('./routes/blogRoutes');
-const commentRoutes = require('./routes/commentRoutes')
+const authRoutes = require('@/routes/authRoutes');
+const blogRoutes = require('@/routes/blogRoutes');
+const commentRoutes = require('@/routes/commentRoutes')
 const cors = require('cors')
 const https = require('https')
-const { socketsmanage } = require('./controllers/ChattingControllers');
+const { socketsmanage } = require('@/controllers/ChattingControllers');
+const { errorHandler, notFoundHandler } = require('@/utils/errorHandler'); // Updated
+const os = require('os');
+const path = require('path');
 
 //socket io
 const { createServer } = require('http')
@@ -49,6 +53,8 @@ io.on('connection', socket=>{
 app.use(express.json());
 app.use(cors())
 
+
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', blogRoutes);
@@ -56,17 +62,15 @@ app.use('/api/comments', commentRoutes);
 
 // Configure multer for image upload
 // Serve static files from uploads directory
-app.use('/uploads', express.static('uploads'));
 
-
-
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Server Technical Zone (Connection)
 const PORT = process.env.PORT || 5000;
 
 // Getting Local Ip Address
-const os = require('os');
+
 
 const getLocalIpAddress = () => {
   const interfaces = os.networkInterfaces();
@@ -84,11 +88,24 @@ const ipAddress = getLocalIpAddress();
 
 // Mongoose Connection Setup
 
-
-   httpServer.listen(PORT, () => console.log(`Server running on port ${ipAddress}:${PORT}`));
-
+mongoose
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Connected to MongoDB', ipAddress);
+    // Use httpServer instead of app.listen
+    httpServer.listen(PORT, () => console.log(`Server running on port ${ipAddress}:${PORT}`));
+  })
+  .catch((err) => console.log(err.message));
 
   setInterval(() => {
-    https.get("https://pothoczuto-backend.onrender.com/"); 
+    https.get("https://pothoczuto-project-5kvp.onrender.com/"); 
     }, 45 * 1000);
   
+
+
+
+    // 404 handler (not found) should be defined before the error handler
+app.use(notFoundHandler);
+
+// Global error handler
+app.use(errorHandler);

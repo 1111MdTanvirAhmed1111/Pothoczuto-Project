@@ -1,39 +1,37 @@
 const fs = require('fs');
 const path = require('path');
-const { PrismaClient } = require('@prisma/client');
 
-const prisma = new PrismaClient();
+// Assuming you have a Post model like this:
+const Post = require('@/models/Post') // Path to your Post model
 
 // Get all posts or a specific post
-async function GetPosts(req, res) {
-  const { id, limit } = req.query;
+async function GetPosts(req, res,next) {
+  const { id } = req.query;
+  const { limit, page } = req.query;
+
+  // Parse the limit and page query parameters
+  const limitValue = parseInt(limit) || 10;  // Default limit to 10 posts
+  const pageValue = parseInt(page) || 1;     // Default to page 1
+  const skipValue = (pageValue - 1) * limitValue;  // Skip the appropriate number of posts
 
   try {
     if (id) {
-      const post = await prisma.post.findUnique({
-        where: { id },
-      });
+      // If an ID is provided, try to find the post by ID
+      const post = await Post.findById(id);
       if (post) {
-        res.status(200).json(post);
+        return res.status(200).json(post);
       } else {
-        res.status(404).json({ title: "Post Not Found" });
+        return res.status(404).json({ "title": "Post Not Found" });
       }
     } else {
-
-      const page = parseInt(req.query.page) || 1; // Default page is 1
-      const pageSize = parseInt(req.query.pageSize) || 10; // Default page size is 10
-    
-      const skip = (page - 1) * pageSize; // Skip the posts already shown in previous pages
-      const take = pageSize; // Limit the number of posts per page
-
-      const posts = await prisma.post.findMany({
-        skip: skip,
-        take: take,
-      });
-      res.status(200).json(posts);
+      // If no ID, apply pagination logic
+      const posts = await Post.find({}).skip(skipValue).limit(limitValue);
+      return res.status(200).json(posts);
     }
+
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    req.error = error
+    next(error)
   }
 }
 
@@ -41,22 +39,21 @@ async function GetPosts(req, res) {
 const createPost = async (req, res) => {
   try {
     if (!req.body.Pdata) {
-      return res.status(400).json({ error: "Please Provide Details" });
+      return res.status(400).json({ "error": "Please Provide Details" });
     }
 
     const { title, content, author, category } = JSON.parse(req.body.Pdata);
     const imageUrl = req.file ? `./uploads/blogs/images/${req.file.filename}` : "null";
 
-    const post = await prisma.post.create({
-      data: {
-        title,
-        content,
-        author,
-        category,
-        imageUrl,
-      },
+    const post = await Post.create({
+      title,
+      content,
+      author,
+      category,
+      imageUrl
     });
 
+    // Emit new post event to all connected clients
     const io = req.app.get('io');
     io.emit('new_post', post);
 
@@ -69,29 +66,29 @@ const createPost = async (req, res) => {
   }
 };
 
+
 // Update a post
 async function updatePost(req, res) {
   const { id } = req.params;
 
   if (!req.body.Pdata) {
-    return res.status(404).json({ error: "Please Provide Details" });
+    return res.status(404).json({ "error": "Please Provide Details" });
   }
 
   try {
-    const existingPost = await prisma.post.findUnique({
-      where: { id },
-    });
-
-    if (!existingPost) {
-      return res.status(404).json({ error: "Post not found" });
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({ "error": "Post not found" });
     }
 
     const { title, content, author, category } = JSON.parse(req.body.Pdata);
-    let imageUrl = existingPost.imageUrl;
 
+    // Handle image update
+    let imageUrl = post.imageUrl; // Keep old image by default
     if (req.file) {
-      if (existingPost.imageUrl && existingPost.imageUrl !== "null") {
-        const oldImagePath = path.join(__dirname, '..', existingPost.imageUrl);
+      // Delete old image if exists
+      if (post.imageUrl && post.imageUrl !== "null") {
+        const oldImagePath = path.join(__dirname, '..', post.imageUrl);
         if (fs.existsSync(oldImagePath)) {
           fs.unlinkSync(oldImagePath);
         }
@@ -99,17 +96,22 @@ async function updatePost(req, res) {
       imageUrl = `./uploads/blogs/images/${req.file.filename}`;
     }
 
-    const updatedPost = await prisma.post.update({
-      where: { id },
-      data: {
+    
+
+    // Using findByIdAndUpdate() instead of save()
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      {
         title,
         content,
         author,
         category,
-        imageUrl,
+        imageUrl
       },
-    });
+      { new: true } // Returns the updated document
+    );
 
+    // Emit update event to clients in this post's room
     const io = req.app.get('io');
     io.to(`post_${id}`).emit('post_updated', updatedPost);
 
@@ -127,14 +129,13 @@ async function deletePost(req, res) {
   const { id } = req.params;
 
   try {
-    const post = await prisma.post.findUnique({
-      where: { id },
-    });
+    const post = await Post.findById(id);
 
     if (!post) {
-      return res.status(404).json({ error: "Post not found" });
+      return res.status(404).json({ "error": "Post not found" });
     }
 
+    // Delete the image file if exists
     if (post.imageUrl && post.imageUrl !== "null") {
       const imagePath = path.join(__dirname, '..', post.imageUrl.replace('.', ''));
       console.log('Attempting to delete image at:', imagePath);
@@ -149,10 +150,10 @@ async function deletePost(req, res) {
       }
     }
 
-    await prisma.post.delete({
-      where: { id },
-    });
+    // Delete the post from database
+    await Post.findByIdAndDelete(id);
 
+    // Emit delete event to all clients
     const io = req.app.get('io');
     io.emit('post_deleted', id);
 

@@ -5,11 +5,11 @@ const {
   approveComment,
   deleteComment,
   editComment,
-} = require('../controllers/commentController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const roleMiddleware = require('../middlewares/roleMiddleware');
-const usersCommentAuthenticate = require('../middlewares/usersCommentAuth');
-const { getAllComments } = require('../controllers/commentController');
+} = require('@/controllers/commentController');
+const authMiddleware = require('@/middlewares/authMiddleware');
+const roleMiddleware = require('@/middlewares/roleMiddleware');
+const usersCommentAuthenticate = require('@/middlewares/usersCommentAuth');
+const { getAllComments } = require('@/controllers/commentController');
 const router = express.Router();
 
 
