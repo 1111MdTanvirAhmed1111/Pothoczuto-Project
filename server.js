@@ -1,111 +1,33 @@
 require('module-alias/register');
 require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const authRoutes = require('@/routes/authRoutes');
-const blogRoutes = require('@/routes/blogRoutes');
-const commentRoutes = require('@/routes/commentRoutes')
-const cors = require('cors')
-const https = require('https')
-const { socketsmanage } = require('@/config/socket'); // Updated
-const { errorHandler, notFoundHandler } = require('@/utils/errorHandler'); // Updated
-const os = require('os');
-const path = require('path');
-const chattingRoutes = require('@/routes/chattingRoutes')
-//socket io
-const { createServer } = require('http')
-const { Server } = require('socket.io');
-
-
-const app = express();
-const httpServer = createServer(app);
-
-
-const io = new Server(httpServer, {
-  cors: {
-    origin: ["https://pothoczuto.xyz"], // Your Next.js app URL
-    methods: ["GET", "POST"],
-    credentials: true,
-    transports: ['websocket', 'polling'] // Add explicit transports
-  },
-  allowEIO3: true // Enable compatibility with Socket.IO v3 clients
-});
-
-
-// Socket.IO events
-
-// Make io accessible to our controllers
-app.set('io', io);
-
-// Socket.IO events
-
-io.on('connection', socket=>{
-
-  socketsmanage(socket, io)
-
-})
-  
 
 
 
 
-// Middlewares
-app.use(express.json());
-app.use(cors())
+
+const {StartServer  } = require('@/Server/ServerStart'); // Updated
+const {runLooper} = require('@/utils/LooperRunner');
+const {dbConnect} = require('@/config/dbConnect');
+const {useRoutes} = require('@/Server/useRoutes');
+const {MiddlewiresUser} = require('@/Server/MiddlewiresUser'); // Updated
 
 
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/posts', blogRoutes);
-app.use('/api/comments', commentRoutes);
-app.use('/api/chattings',chattingRoutes)
-// Configure multer for image upload
-// Serve static files from uploads directory
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 
-// Server Technical Zone (Connection)
-const PORT = process.env.PORT || 5000;
-
-// Getting Local Ip Address
 
 
-const getLocalIpAddress = () => {
-  const interfaces = os.networkInterfaces();
-  for (const name of Object.keys(interfaces)) {
-    for (const iface of interfaces[name]) {
-      // Skip internal and non-IPv4 addresses
-      if (!iface.internal && iface.family === 'IPv4') {
-        return iface.address;
-      }
-    }
-  }
-  return 'localhost';
-};
-const ipAddress = getLocalIpAddress();
 
-// Mongoose Connection Setup
 
-mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('Connected to MongoDB', ipAddress);
-    // Use httpServer instead of app.listen
-    httpServer.listen(PORT, () => console.log(`Server running on port ${ipAddress}:${PORT}`));
-  })
-  .catch((err) => console.log(err.message));
 
-  setInterval(() => {
-    https.get("https://pothoczuto-backend.onrender.com/"); 
-    }, 45 * 1000);
-  
+useRoutes();
+MiddlewiresUser();
+StartServer();
+dbConnect()
+runLooper()
 
 
 
     // 404 handler (not found) should be defined before the error handler
-app.use(notFoundHandler);
 
-// Global error handler
-app.use(errorHandler);
+

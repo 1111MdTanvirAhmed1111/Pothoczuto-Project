@@ -1,4 +1,10 @@
+const {io} = require('@/Server/ServerStart');
 // Socket controller with messaging to specific users
+io.on('connection', socket=>{
+
+  socketsmanage(socket, io)
+
+})
 const socketsmanage = (socket, io) => {
 
 
