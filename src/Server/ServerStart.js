@@ -4,6 +4,9 @@ const { Server } = require('socket.io');
 const app = express();
 const httpServer = createServer(app);
 
+const {socketWork} = require('@/config/socket');
+
+
 const io = new Server(httpServer, {
   cors: {
     origin: ["https://pothoczuto.xyz"], // Your Next.js app URL
@@ -17,7 +20,7 @@ const io = new Server(httpServer, {
 
 const {getLocalIpAddress} = require('@/utils/ipAddress');
 const ipAddress = getLocalIpAddress();
-
+socketWork(io);
 const StartServer =  () => {
     const PORT = process.env.PORT || 5000;
     httpServer.listen(PORT, () => console.log(`Server running on port ${ipAddress}:${PORT}`));

@@ -1,11 +1,9 @@
-const {io} = require('@/Server/ServerStart');
-
+const socketWork = (io) => {
 io.on('connection', socket=>{
 
-  socketsmanage(socket, io)
 
-})
-const socketsmanage = (socket, io) => {
+
+
 
 
 
@@ -60,6 +58,6 @@ const socketsmanage = (socket, io) => {
   
   
   
-  };
-
-module.exports = {socketsmanage}; 
+  })
+}
+module.exports = {socketWork} 
