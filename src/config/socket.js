@@ -2,7 +2,7 @@ const socketWork = (io) => {
 io.on('connection', socket=>{
 
 
-
+const users = {};
 
 
 
