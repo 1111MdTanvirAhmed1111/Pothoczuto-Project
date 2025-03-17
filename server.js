@@ -3,7 +3,7 @@ require('dotenv').config();
 
 
 const {StartServer  } = require('@/Server/ServerStart'); // Updated
-const {runLooper} = require('@/utils/looperRunner');
+const {runLooper} = require('./src/utils/looperRunner')
 const {dbConnect} = require('@/config/dbConnect');
 const {useRoutes} = require('@/Server/useRoutes');
 const {MiddlewiresUser} = require('@/Server/MiddlewiresUser'); // Updated
